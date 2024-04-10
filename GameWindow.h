@@ -15,7 +15,7 @@ private:
     sf::Font font;
 public:
     GameWindow(int rows, int cols, int bombs, string name):numOfRows(rows),numOfCols(cols),numOfBombs(bombs),PlayerName(name){
-        font.loadFromFile("C:\\Users\\Ben\\CLionProjects\\minesweeper\\Project 3 - Minesweeper Spring 2024\\files\\font.ttf");
+        font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
     }
     void gamePlay() {
         sf::RenderWindow window(sf::VideoMode(numOfRows * 32 + 100, numOfCols * 32), "GameScreen");

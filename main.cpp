@@ -4,7 +4,7 @@
 #include <fstream>
 
 int main(){
-    ifstream file("C:\\Users\\Ben\\CLionProjects\\minesweeper\\Project 3 - Minesweeper Spring 2024\\files\\config.cfg");
+    ifstream file("../Project 3 - Minesweeper Spring 2024/files/config.cfg");
     int width;
     int height;
     int numOfBombs;

@@ -17,7 +17,7 @@ private:
     sf::Font font;
 public:
     WelcomeWindow():sizeOfName(10), name(""){
-        font.loadFromFile("C:\\Users\\Ben\\CLionProjects\\minesweeper\\Project 3 - Minesweeper Spring 2024\\files\\font.ttf");
+        font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
     }
     bool events(float x, float y, string name_){
         sf::RenderWindow window(sf::VideoMode(x, y), name_);
