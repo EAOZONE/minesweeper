@@ -16,10 +16,10 @@ private:
     string name;
     sf::Font font;
 public:
-    WelcomeWindow():sizeOfName(10), name(""){
+    WelcomeWindow():sizeOfName(10){
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
     }
-    bool events(float x, float y, string name_){
+    bool events(float x, float y, const string& name_){
         sf::RenderWindow window(sf::VideoMode(x, y), name_);
         while(window.isOpen()){
             sf::Event event{};
@@ -29,12 +29,12 @@ public:
                     return false;
                 }
                 if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::BackSpace){
-                    if(name.size() > 0) {
+                    if(!name.empty()) {
                         name.pop_back();
                     }
                 }
                 if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
-                    if(name.size() >0) {
+                    if(!name.empty()) {
                         window.close();
                         //Open game window
                         return true;
@@ -43,7 +43,7 @@ public:
                 if(event.type == sf::Event::TextEntered){
                     if(event.text.unicode < 128 && isalpha(static_cast<char>(event.text.unicode))){
                         if(name.size() < sizeOfName){
-                            if(name.size() == 0){
+                            if(name.empty()){
                                 name += toupper(static_cast<char>(event.text.unicode));
                             }
                             else{
@@ -53,21 +53,20 @@ public:
                     }
                 }
             }
-            sf::Text text = drawName(name + "|", x/2, y/2);
-            sf::Text instructions = drawName("WELCOME TO MINESWEEPER!", x/2, (y/2)-150);
-            sf::Text instructions_1 = drawName("Enter your name:", x/2, (y/2)-50);
+            sf::Text text = drawWord(name + "|", x / 2, y / 2 - 45, 18);
+            sf::Text instructions = drawWord("WELCOME TO MINESWEEPER!", x / 2, (y / 2) - 150, 24);
+            sf::Text instructions_1 = drawWord("Enter your name:", x / 2, (y / 2) - 75, 20);
             instructions.setStyle(sf::Text::Underlined);
             window.clear(sf::Color::Blue);
             window.draw(instructions);
             window.draw(instructions_1);
             window.draw(text);
             window.display();
-            cout<<name<<endl;
         }
     }
-    sf::Text drawName(string word, float pos_x, float pos_y){
+    sf::Text drawWord(const string& word, float pos_x, float pos_y, int size){
         sf::Text text(word, font);
-        text.setCharacterSize(30);
+        text.setCharacterSize(size);
         text.setFillColor(sf::Color::White);
         setText(text, pos_x, pos_y);
         return text;
