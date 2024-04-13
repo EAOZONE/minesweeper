@@ -5,6 +5,7 @@ using namespace std;
 #include <Graphics/Font.hpp>
 #include <Graphics/Text.hpp>
 #include <SFML/Graphics.hpp>
+#include "Tile.h"
 
 class GameWindow{
 private:
@@ -18,7 +19,13 @@ public:
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
     }
     void gamePlay() {
-        sf::RenderWindow window(sf::VideoMode(numOfRows * 32 + 100, numOfCols * 32), "GameScreen");
+        Tile* board[numOfRows][numOfCols];
+        sf::RenderWindow window(sf::VideoMode(numOfRows * 32, numOfCols * 32+100), "GameScreen");
+        for(int i = 0; i < numOfRows; i++){
+            for(int j = 0; j<numOfCols; j++){
+                board[i][j] = new Tile(i*32, j*32, "../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            }
+        }
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {
@@ -26,11 +33,14 @@ public:
                     window.close();
                 }
             }
-            sf::Text something = drawWord("This is the game screen for now", (numOfRows*32+100)/2,(numOfCols*32)/2);
-            sf::Text displayName = drawWord("You typed in " + PlayerName, (numOfRows*32+100)/2,(numOfCols*32)/2 + 100);
             window.clear(sf::Color::Blue);
-            window.draw(something);
-            window.draw(displayName);
+            for(int i = 0; i < numOfRows; i++){
+                for(int j = 0; j<numOfCols; j++){
+                    window.draw(board[i][j]->sprite);
+                    board[i][j]->mousePressed(sf::Mouse().getPosition(window));
+                }
+            }
+
             window.display();
         }
 
