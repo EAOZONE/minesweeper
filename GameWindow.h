@@ -26,6 +26,18 @@ public:
                 board[i][j] = new Tile(i*32, j*32, "../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
             }
         }
+        int bombsPlaced = 0;
+        while (bombsPlaced < numOfBombs){
+            int row = rand() % numOfRows;
+            int col = rand() % numOfCols;
+            if(!board[row][col]->isMine){
+                board[row][col]->setIsMine(true);
+            }
+            else{
+                board[row][col]->setIsMine(false);
+            }
+            bombsPlaced++;
+        }
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {
@@ -35,9 +47,14 @@ public:
             }
             window.clear(sf::Color::Blue);
             for(int i = 0; i < numOfRows; i++){
-                for(int j = 0; j<numOfCols; j++){
+                for(int j = 0; j<numOfCols; j++) {
                     window.draw(board[i][j]->sprite);
-                    board[i][j]->mousePressed(sf::Mouse().getPosition(window));
+                    if (sf::Mouse().isButtonPressed(Mouse::Right)) {
+                        board[i][j]->placeFlag(sf::Mouse().getPosition(window));
+                    }
+                    else if (sf::Mouse().isButtonPressed(Mouse::Left)){
+                        board[i][j]->openBox(sf::Mouse().getPosition(window));
+                    }
                 }
             }
 
