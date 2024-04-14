@@ -4,8 +4,9 @@ using namespace std;
 using namespace sf;
 class Tile : public GameObject{
 private:
-public:
     bool isMine;
+    int bombCount;
+public:
     Tile(){
         setPosition(0, 0);
         isMine = false;
@@ -29,13 +30,23 @@ public:
                 setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
                 setSprite();
             }
-            else{
+            else if(bombCount == 0){
                 setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+                setSprite();
+            }
+            else{
+                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/number_"+ to_string(bombCount)+".png");
                 setSprite();
             }
         }
     }
+    bool getIsMine(){
+        return isMine;
+    }
     void setIsMine(bool isMine){
         this->isMine = isMine;
+    }
+    void setBombCount(int bombCount){
+        this->bombCount = bombCount;
     }
 };

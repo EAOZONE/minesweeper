@@ -30,13 +30,30 @@ public:
         while (bombsPlaced < numOfBombs){
             int row = rand() % numOfRows;
             int col = rand() % numOfCols;
-            if(!board[row][col]->isMine){
+            if(!board[row][col]->getIsMine()){
                 board[row][col]->setIsMine(true);
             }
             else{
                 board[row][col]->setIsMine(false);
             }
             bombsPlaced++;
+        }
+        for(int i = 0; i <numOfRows; i++){
+            for(int j = 0; j<numOfCols; j++){
+                int bombCount = 0;
+                int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+                int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+                for(int k = 0; k<8; k++){
+                    int nx = i + dx[k];
+                    int ny = j + dy[k];
+                    if(nx >= 0 && nx < numOfRows && ny >= 0 && ny < numOfCols){
+                        if(board[nx][ny]->getIsMine()){
+                            bombCount++;
+                        }
+                    }
+                }
+                board[i][j]->setBombCount(bombCount);
+            }
         }
         while (window.isOpen()) {
             sf::Event event{};
@@ -45,7 +62,7 @@ public:
                     window.close();
                 }
             }
-            window.clear(sf::Color::Blue);
+            window.clear(sf::Color::White);
             for(int i = 0; i < numOfRows; i++){
                 for(int j = 0; j<numOfCols; j++) {
                     window.draw(board[i][j]->sprite);
