@@ -7,6 +7,7 @@ using namespace std;
 #include <SFML/Graphics.hpp>
 #include "Board.h"
 
+
 class GameWindow{
 private:
     int numOfRows;
@@ -23,6 +24,8 @@ public:
         Board board = Board(numOfRows, numOfCols, numOfBombs);
         board.setBombs();
         board.calculateNearbyBombs();
+
+        DebugButton debugButton = DebugButton((numOfCols * 32)-304, 32*(numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {
@@ -38,6 +41,15 @@ public:
                         board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
+//                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window))){
+                            for(int bombs = 0; bombs < numOfRows; bombs++){
+                                for(int b = 0; b < numOfCols; b++){
+                                    board.setDebug(bombs, b);
+                                    if(board.getBoard()[bombs][b]->getIsMine()){
+                                    }
+                                }
+//                            }
+                        }
                         board.openTile(sf::Mouse().getPosition(window), i, j);
                     }
                     else if(!sf::Mouse().isButtonPressed(Mouse::Right) && board.getMouseState() == 1){
@@ -45,7 +57,6 @@ public:
                     }
                 }
             }
-
             window.display();
         }
 

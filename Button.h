@@ -1,6 +1,7 @@
 #include "Tile.h"
 
 class Button : public GameObject{
+public:
     Button(){
         setPosition(0,0);
     }
