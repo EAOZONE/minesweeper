@@ -117,9 +117,15 @@ void calculateNearbyBombs(){
         return bombExploded;
     }
     void setDebug(int i, int j){
-        if(board[i][j]->getIsMine()) {
+        if(board[i][j]->getState() == hidden) {
             board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
             board[i][j]->setSprite();
+            board[i][j]->setState(revealed);
+        }
+        else if(board[i][j]->getState() == revealed){
+            board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            board[i][j]->setSprite();
+            board[i][j]->setState(hidden);
         }
     }
 };

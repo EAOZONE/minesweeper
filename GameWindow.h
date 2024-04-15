@@ -46,8 +46,8 @@ public:
                         if(debugButton.buttonPressed(sf::Mouse().getPosition(window))){
                             for(int bombs = 0; bombs < numOfRows; bombs++){
                                 for(int b = 0; b < numOfCols; b++){
-                                    board.setDebug(bombs, b);
                                     if(board.getBoard()[bombs][b]->getIsMine()){
+                                        board.setDebug(bombs, b);
                                     }
                                 }
                             }
