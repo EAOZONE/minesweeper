@@ -25,7 +25,8 @@ public:
         board.setBombs();
         board.calculateNearbyBombs();
 
-        DebugButton debugButton = DebugButton((numOfCols * 32)-304, 32*(numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
+        DebugButton debugButton = DebugButton((numOfRows * 32)-304, 32*(numOfCols + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
+        cout<<debugButton.position.x<<endl;
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {
@@ -34,6 +35,7 @@ public:
                 }
             }
             window.clear(sf::Color::White);
+            window.draw(debugButton.sprite);
             for(int i = 0; i < numOfRows; i++){
                 for(int j = 0; j<numOfCols; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
@@ -41,14 +43,14 @@ public:
                         board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
-//                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window))){
+                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window))){
                             for(int bombs = 0; bombs < numOfRows; bombs++){
                                 for(int b = 0; b < numOfCols; b++){
                                     board.setDebug(bombs, b);
                                     if(board.getBoard()[bombs][b]->getIsMine()){
                                     }
                                 }
-//                            }
+                            }
                         }
                         board.openTile(sf::Mouse().getPosition(window), i, j);
                     }

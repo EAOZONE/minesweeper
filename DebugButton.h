@@ -14,5 +14,6 @@ public:
         if(sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))){
             return true;
         }
+        return false;
     }
 };

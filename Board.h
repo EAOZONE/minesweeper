@@ -118,7 +118,7 @@ void calculateNearbyBombs(){
     }
     void setDebug(int i, int j){
         if(board[i][j]->getIsMine()) {
-            board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
+            board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
             board[i][j]->setSprite();
         }
     }
