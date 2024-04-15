@@ -34,11 +34,13 @@ void setBombs(){
         int col = rand() % numOfCols;
         if(!board[row][col]->getIsMine()){
             board[row][col]->setIsMine(true);
+            bombsPlaced++;
         }
         else{
             board[row][col]->setIsMine(false);
+            bombsPlaced--;
         }
-        bombsPlaced++;
+
     }
 }
 void calculateNearbyBombs(){
