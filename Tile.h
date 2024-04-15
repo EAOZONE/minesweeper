@@ -83,4 +83,7 @@ public:
     int getBombCount(){
         return bombCount;
     }
+    sf::Sprite getSprite(){
+        return sprite;
+    }
 };

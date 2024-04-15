@@ -71,12 +71,12 @@ void calculateNearbyBombs(){
         }
     }
     void openTile(Vector2i mousePos, int i, int j) {
-        if (board[i][j]->getState() == hidden) {
+        if (board[i][j]->getState() == hidden && board[i][j]->getSprite().getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
             board[i][j]->openBox(mousePos);
             if (board[i][j]->getBombCount() == 0 && !board[i][j]->getIsMine()) {
                 openOtherTiles(i, j);
+                board[i][j]->setState(revealed);
             }
-            board[i][j]->setState(revealed);
         }
     }
     void openOtherTiles(int i, int j) {
