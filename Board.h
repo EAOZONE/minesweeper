@@ -6,7 +6,7 @@ private:
     int numOfRows;
     int numOfCols;
     int numOfBombs;
-    int numOFIters = 0;
+    int mouseState = 0;
 public:
     Board(int numOfRows, int numOfCols, int numOfBombs){
         this->numOfRows = numOfRows;
@@ -59,33 +59,51 @@ void calculateNearbyBombs(){
         }
     }
     }
-    void mouseRightClicked(Vector2i mousePos, int i, int j){
-        board[i][j]->placeFlag(mousePos);
-    }
-    void openTile(Vector2i mousePos, int i, int j) {
-            board[i][j]->openBox(mousePos);
-            if (board[i][j]->getBombCount() == 0) {
-                openOtherTiles(i, j);
-                board[i][j]->setState(revealed);
+    void mouseRightClicked(Vector2i mousePos, int i, int j) {
+        if (mouseState == 0) {
+            if (board[i][j]->getState() == hidden) {
+                board[i][j]->placeFlag(mousePos);
+                mouseState = 1;
+            } else if (board[i][j]->getState() == flag) {
+                board[i][j]->removeFlag(mousePos);
+                mouseState = 1;
             }
         }
+    }
+    void openTile(Vector2i mousePos, int i, int j) {
+        if (board[i][j]->getState() == hidden) {
+            board[i][j]->openBox(mousePos);
+            if (board[i][j]->getBombCount() == 0 && !board[i][j]->getIsMine()) {
+                openOtherTiles(i, j);
+            }
+            board[i][j]->setState(revealed);
+        }
+    }
     void openOtherTiles(int i, int j) {
         int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
         int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
         for (int k = 0; k < 8; k++) {
             int nx = i + dx[k];
-            int ny = j +dy[k];
-            if(board[nx][ny]->getState() == hidden){
-                if(!board[nx][ny]->getIsMine()){
+            int ny = j + dy[k];
+            if(nx >= 0 && nx < numOfRows && ny >= 0 && ny < numOfCols){
+                if(board[nx][ny]->getState() == hidden && !board[nx][ny]->getIsMine()){
                     board[nx][ny]->openBox();
-                    openOtherTiles(nx, ny);
+                    if (board[nx][ny]->getBombCount() == 0) {
+                        openOtherTiles(nx, ny);
+                    }
                 }
             }
         }
     }
 
-    vector<vector<Tile*>> getBoard(){
+    const vector<vector<Tile*>>& getBoard() const{
         return board;
+    }
+    void setMouseState(int mouseState){
+        this->mouseState = mouseState;
+    }
+    int getMouseState(){
+        return mouseState;
     }
 };

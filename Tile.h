@@ -30,6 +30,13 @@ public:
             state = flag;
         }
     }
+    void removeFlag(Vector2i mousePosition){
+        if(sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))){
+            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            setSprite();
+            state = hidden;
+        }
+    }
     void openBox(Vector2i mousePosition) {
         if (sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))) {
             if (isMine) {

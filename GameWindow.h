@@ -40,6 +40,9 @@ public:
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
                         board.openTile(sf::Mouse().getPosition(window), i, j);
                     }
+                    else if(!sf::Mouse().isButtonPressed(Mouse::Right) && board.getMouseState() == 1){
+                        board.setMouseState(0);
+                    }
                 }
             }
 
