@@ -7,6 +7,7 @@ private:
     int numOfCols;
     int numOfBombs;
     int mouseState = 0;
+    bool bombExploded;
 public:
     Board(int numOfRows, int numOfCols, int numOfBombs){
         this->numOfRows = numOfRows;
@@ -77,6 +78,9 @@ void calculateNearbyBombs(){
                 openOtherTiles(i, j);
                 board[i][j]->setState(revealed);
             }
+            else if(board[i][j]->getIsMine()){
+                bombExploded = true;
+            }
         }
     }
     void openOtherTiles(int i, int j) {
@@ -105,5 +109,8 @@ void calculateNearbyBombs(){
     }
     int getMouseState(){
         return mouseState;
+    }
+    bool getBombExploded(){
+        return bombExploded;
     }
 };

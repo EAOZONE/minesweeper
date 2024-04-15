@@ -7,6 +7,9 @@ add_executable(minesweeper main.cpp
         WelcomeWindow.h
         WelcomeWindow.cpp
         GameWindow.h
+        Button.cpp
+        Button.h
+        Button.h
 )
 
 set(SFML_STATIC_LIBRARIES TRUE)
