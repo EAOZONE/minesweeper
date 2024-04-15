@@ -5,7 +5,7 @@ using namespace std;
 #include <Graphics/Font.hpp>
 #include <Graphics/Text.hpp>
 #include <SFML/Graphics.hpp>
-#include "Tile.h"
+#include "Board.h"
 
 class GameWindow{
 private:
@@ -19,42 +19,10 @@ public:
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
     }
     void gamePlay() {
-        Tile* board[numOfRows][numOfCols];
         sf::RenderWindow window(sf::VideoMode(numOfRows * 32, numOfCols * 32+100), "GameScreen");
-        for(int i = 0; i < numOfRows; i++){
-            for(int j = 0; j<numOfCols; j++){
-                board[i][j] = new Tile(i*32, j*32, "../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
-            }
-        }
-        int bombsPlaced = 0;
-        while (bombsPlaced < numOfBombs){
-            int row = rand() % numOfRows;
-            int col = rand() % numOfCols;
-            if(!board[row][col]->getIsMine()){
-                board[row][col]->setIsMine(true);
-            }
-            else{
-                board[row][col]->setIsMine(false);
-            }
-            bombsPlaced++;
-        }
-        for(int i = 0; i <numOfRows; i++){
-            for(int j = 0; j<numOfCols; j++){
-                int bombCount = 0;
-                int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
-                int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
-                for(int k = 0; k<8; k++){
-                    int nx = i + dx[k];
-                    int ny = j + dy[k];
-                    if(nx >= 0 && nx < numOfRows && ny >= 0 && ny < numOfCols){
-                        if(board[nx][ny]->getIsMine()){
-                            bombCount++;
-                        }
-                    }
-                }
-                board[i][j]->setBombCount(bombCount);
-            }
-        }
+        Board board = Board(numOfRows, numOfCols, numOfBombs);
+        board.setBombs();
+        board.calculateNearbyBombs();
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {
@@ -65,12 +33,12 @@ public:
             window.clear(sf::Color::White);
             for(int i = 0; i < numOfRows; i++){
                 for(int j = 0; j<numOfCols; j++) {
-                    window.draw(board[i][j]->sprite);
+                    window.draw(board.getBoard()[i][j]->sprite);
                     if (sf::Mouse().isButtonPressed(Mouse::Right)) {
-                        board[i][j]->placeFlag(sf::Mouse().getPosition(window));
+                        board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
-                        board[i][j]->openBox(sf::Mouse().getPosition(window));
+                        board.openTile(sf::Mouse().getPosition(window), i, j);
                     }
                 }
             }
