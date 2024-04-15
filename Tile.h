@@ -86,4 +86,28 @@ public:
     sf::Sprite getSprite(){
         return sprite;
     }
+    void setOpen(){
+        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+        setSprite();
+    }
+    void backToNormal(){
+        if(state != hidden) {
+            if (isMine) {
+                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
+                setSprite();
+            } else if (bombCount == 0) {
+                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+                setSprite();
+            } else {
+                setTexture(
+                        "../Project 3 - Minesweeper Spring 2024/files/images/number_" + to_string(bombCount) + ".png");
+                setSprite();
+            }
+            state = revealed;
+        }
+        else{
+            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            setSprite();
+        }
+    }
 };

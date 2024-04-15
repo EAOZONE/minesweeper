@@ -1,4 +1,4 @@
-#include "DebugButton.h"
+#include "PausePlay.h"
 
 
 class Board{
@@ -127,5 +127,12 @@ void calculateNearbyBombs(){
             board[i][j]->setSprite();
             board[i][j]->setState(hidden);
         }
+    }
+    void openAll(int i, int j){
+        board[i][j]->setOpen();
+    }
+    void returnToNormal(int i, int j){
+        board[i][j]->backToNormal();
+
     }
 };

@@ -11,6 +11,8 @@ add_executable(minesweeper main.cpp
         Button.h
         Button.h
         DebugButton.h
+        PausePlay.cpp
+        PausePlay.h
 )
 
 set(SFML_STATIC_LIBRARIES TRUE)

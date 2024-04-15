@@ -26,7 +26,7 @@ public:
         board.calculateNearbyBombs();
 
         DebugButton debugButton = DebugButton((numOfRows * 32)-304, 32*(numOfCols + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
-        cout<<debugButton.position.x<<endl;
+        PausePlay pausePlayButton = PausePlay((numOfRows * 32)-240, 32*(numOfCols +0.5), "../Project 3 - Minesweeper Spring 2024/files/images/pause.png");
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {
@@ -36,6 +36,7 @@ public:
             }
             window.clear(sf::Color::White);
             window.draw(debugButton.sprite);
+            window.draw(pausePlayButton.sprite);
             for(int i = 0; i < numOfRows; i++){
                 for(int j = 0; j<numOfCols; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
@@ -48,6 +49,21 @@ public:
                                 for(int b = 0; b < numOfCols; b++){
                                     if(board.getBoard()[bombs][b]->getIsMine()){
                                         board.setDebug(bombs, b);
+                                    }
+                                }
+                            }
+                        }
+                        else if(pausePlayButton.ButtonClciked(sf::Mouse().getPosition(window))) {
+                            if (!pausePlayButton.getPause()) {
+                                for (int l = 0; l < numOfRows; l++) {
+                                    for (int m = 0; m < numOfCols; m++) {
+                                        board.openAll(l, m);
+                                    }
+                                }
+                            } else {
+                                for (int l = 0; l < numOfRows; l++) {
+                                    for (int m = 0; m < numOfCols; m++) {
+                                        board.returnToNormal(l, m);
                                     }
                                 }
                             }
