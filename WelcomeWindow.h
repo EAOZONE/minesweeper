@@ -36,7 +36,6 @@ public:
                 if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter){
                     if(!name.empty()) {
                         window.close();
-                        //Open game window
                         return true;
                     }
                 }
