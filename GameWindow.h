@@ -28,6 +28,7 @@ public:
         DebugButton debugButton = DebugButton((numOfCols * 32) - 304, 32 * (numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
         PausePlay pausePlayButton = PausePlay((numOfCols * 32) - 240, 32 * (numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/pause.png");
         LeaderBoard leaderBoard = LeaderBoard( (numOfCols * 32) - 176, 32*(numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/leaderboard.png");
+        leaderBoard.readTopFive("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {
@@ -47,6 +48,7 @@ public:
                         board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
+                        leaderBoard.buttonPressed(sf::Mouse().getPosition(window));
                         if(debugButton.buttonPressed(sf::Mouse().getPosition(window))){
                             for(int bombs = 0; bombs < numOfCols; bombs++){
                                 for(int b = 0; b < numOfRows; b++){
