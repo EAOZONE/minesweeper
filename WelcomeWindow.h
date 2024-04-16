@@ -57,6 +57,9 @@ public:
             sf::Text instructions = drawWord("WELCOME TO MINESWEEPER!", x / 2, (y / 2) - 150, 24);
             sf::Text instructions_1 = drawWord("Enter your name:", x / 2, (y / 2) - 75, 20);
             instructions.setStyle(sf::Text::Underlined);
+            text.setStyle(sf::Text::Bold);
+            instructions.setStyle(sf::Text::Bold);
+            instructions_1.setStyle(sf::Text::Bold);
             window.clear(sf::Color::Blue);
             window.draw(instructions);
             window.draw(instructions_1);
