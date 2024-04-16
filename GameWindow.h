@@ -43,6 +43,7 @@ public:
                 for(int j = 0; j < numOfRows; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
                     if (sf::Mouse().isButtonPressed(Mouse::Right)) {
+                        //TODO: Set right click only happen once
                         board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
@@ -72,9 +73,7 @@ public:
                         }
                         board.openTile(sf::Mouse().getPosition(window), i, j);
                     }
-                    else if(!sf::Mouse().isButtonPressed(Mouse::Right) && board.getMouseState() == 1){
-                        board.setMouseState(0);
-                    }
+
                 }
             }
             window.display();

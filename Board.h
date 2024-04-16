@@ -67,7 +67,7 @@ void calculateNearbyBombs(){
             if (board[i][j]->getState() == hidden) {
                 board[i][j]->placeFlag(mousePos);
             } else if (board[i][j]->getState() == flag) {
-                //board[i][j]->removeFlag(mousePos);
+                board[i][j]->removeFlag(mousePos);
             }
     }
     void openTile(Vector2i mousePos, int i, int j) {
