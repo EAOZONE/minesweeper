@@ -10,23 +10,24 @@ using namespace std;
 
 class GameWindow{
 private:
-    int numOfRows;
     int numOfCols;
+    int numOfRows;
     int numOfBombs;
     string PlayerName;
     sf::Font font;
 public:
-    GameWindow(int rows, int cols, int bombs, string name):numOfRows(rows),numOfCols(cols),numOfBombs(bombs),PlayerName(name){
+    GameWindow(int rows, int cols, int bombs, string name): numOfCols(rows), numOfRows(cols), numOfBombs(bombs), PlayerName(name){
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
     }
     void gamePlay() {
-        sf::RenderWindow window(sf::VideoMode(numOfRows * 32, numOfCols * 32+100), "GameScreen");
-        Board board = Board(numOfRows, numOfCols, numOfBombs);
+        sf::RenderWindow window(sf::VideoMode(numOfCols * 32, numOfRows * 32 + 100), "GameScreen");
+        Board board = Board(numOfCols, numOfRows, numOfBombs);
         board.setBombs();
         board.calculateNearbyBombs();
 
-        DebugButton debugButton = DebugButton((numOfRows * 32)-304, 32*(numOfCols + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
-        PausePlay pausePlayButton = PausePlay((numOfRows * 32)-240, 32*(numOfCols +0.5), "../Project 3 - Minesweeper Spring 2024/files/images/pause.png");
+        DebugButton debugButton = DebugButton((numOfCols * 32) - 304, 32 * (numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
+        PausePlay pausePlayButton = PausePlay((numOfCols * 32) - 240, 32 * (numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/pause.png");
+        LeaderBoard leaderBoard = LeaderBoard( (numOfCols * 32) - 176, 32*(numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/leaderboard.png");
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {
@@ -37,16 +38,17 @@ public:
             window.clear(sf::Color::White);
             window.draw(debugButton.sprite);
             window.draw(pausePlayButton.sprite);
-            for(int i = 0; i < numOfRows; i++){
-                for(int j = 0; j<numOfCols; j++) {
+            window.draw(leaderBoard.sprite);
+            for(int i = 0; i < numOfCols; i++){
+                for(int j = 0; j < numOfRows; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
                     if (sf::Mouse().isButtonPressed(Mouse::Right)) {
                         board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
                         if(debugButton.buttonPressed(sf::Mouse().getPosition(window))){
-                            for(int bombs = 0; bombs < numOfRows; bombs++){
-                                for(int b = 0; b < numOfCols; b++){
+                            for(int bombs = 0; bombs < numOfCols; bombs++){
+                                for(int b = 0; b < numOfRows; b++){
                                     if(board.getBoard()[bombs][b]->getIsMine()){
                                         board.setDebug(bombs, b);
                                     }
@@ -55,14 +57,14 @@ public:
                         }
                         else if(pausePlayButton.ButtonClciked(sf::Mouse().getPosition(window))) {
                             if (!pausePlayButton.getPause()) {
-                                for (int l = 0; l < numOfRows; l++) {
-                                    for (int m = 0; m < numOfCols; m++) {
+                                for (int l = 0; l < numOfCols; l++) {
+                                    for (int m = 0; m < numOfRows; m++) {
                                         board.openAll(l, m);
                                     }
                                 }
                             } else {
-                                for (int l = 0; l < numOfRows; l++) {
-                                    for (int m = 0; m < numOfCols; m++) {
+                                for (int l = 0; l < numOfCols; l++) {
+                                    for (int m = 0; m < numOfRows; m++) {
                                         board.returnToNormal(l, m);
                                     }
                                 }

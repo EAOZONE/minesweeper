@@ -91,7 +91,11 @@ public:
         setSprite();
     }
     void backToNormal(){
-        if(state != hidden) {
+        if(state == flag){
+            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/flag.png");
+            setSprite();
+        }
+        else if(state != hidden) {
             if (isMine) {
                 setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
                 setSprite();

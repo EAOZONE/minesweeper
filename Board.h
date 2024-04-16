@@ -1,4 +1,4 @@
-#include "PausePlay.h"
+#include "Leaderboard.h"
 
 
 class Board{
@@ -64,15 +64,11 @@ void calculateNearbyBombs(){
     }
     }
     void mouseRightClicked(Vector2i mousePos, int i, int j) {
-        if (mouseState == 0) {
             if (board[i][j]->getState() == hidden) {
                 board[i][j]->placeFlag(mousePos);
-                mouseState = 1;
             } else if (board[i][j]->getState() == flag) {
-                board[i][j]->removeFlag(mousePos);
-                mouseState = 1;
+                //board[i][j]->removeFlag(mousePos);
             }
-        }
     }
     void openTile(Vector2i mousePos, int i, int j) {
         if (board[i][j]->getState() == hidden && board[i][j]->getSprite().getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
