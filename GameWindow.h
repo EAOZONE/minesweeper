@@ -78,6 +78,9 @@ public:
 
                 }
             }
+            if(board.checkWin()) {
+                board.setAllFlags();
+            }
             window.display();
         }
 

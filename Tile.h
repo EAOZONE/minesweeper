@@ -30,6 +30,11 @@ public:
             state = flag;
         }
     }
+    void placeFlag(){
+        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/flag.png");
+        setSprite();
+        state = flag;
+    }
     void removeFlag(Vector2i mousePosition){
         if(sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))){
             setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");

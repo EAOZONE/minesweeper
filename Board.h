@@ -100,6 +100,27 @@ void calculateNearbyBombs(){
         }
     }
 
+    bool checkWin(){
+        for(int i = 0; i < numOfRows; i++){
+            for(int j = 0; j < numOfCols; j++){
+                if(!board[i][j]->getIsMine()){
+                    if(board[i][j]->getState() == hidden){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    void setAllFlags(){
+        for(int i = 0; i < numOfRows; i++){
+            for(int j =0; j < numOfCols; j++){
+                if(board[i][j]->getIsMine()){
+                    board[i][j]->placeFlag();
+                }
+            }
+        }
+    }
     const vector<vector<Tile*>>& getBoard() const{
         return board;
     }
