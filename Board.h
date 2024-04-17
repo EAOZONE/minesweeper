@@ -1,4 +1,4 @@
-#include "Leaderboard.h"
+#include "FaceButton.h"
 
 
 class Board{
@@ -116,6 +116,16 @@ void calculateNearbyBombs(){
             }
         }
         return true;
+    }
+    bool checkLose() {
+        for (int i = 0; i < numOfRows; i++) {
+            for (int j = 0; j < numOfCols; j++) {
+                if (board[i][j]->getIsMine() && board[i][j]->getState() == revealed) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     void setAllFlags(){
         for(int i = 0; i < numOfRows; i++){

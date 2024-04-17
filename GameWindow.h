@@ -29,6 +29,7 @@ public:
         PausePlay pausePlayButton = PausePlay((numOfCols * 32) - 240, 32 * (numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/pause.png");
         LeaderBoard leaderBoard = LeaderBoard( (numOfCols * 32) - 176, 32*(numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/leaderboard.png");
         leaderBoard.readTopFive("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
+        FaceButton faceButton = FaceButton((numOfCols*16)-32, 32*(numOfRows+0.5), "../Project 3 - Minesweeper Spring 2024/files/images/face_happy.png");
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {
@@ -40,6 +41,7 @@ public:
             window.draw(debugButton.sprite);
             window.draw(pausePlayButton.sprite);
             window.draw(leaderBoard.sprite);
+            window.draw(faceButton.sprite);
             for(int i = 0; i < numOfCols; i++){
                 for(int j = 0; j < numOfRows; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
@@ -80,6 +82,13 @@ public:
             }
             if(board.checkWin()) {
                 board.setAllFlags();
+                faceButton.gameWon();
+            }
+            else if(board.checkLose() && !debugButton.getDebugActive()){
+                faceButton.gameLose();
+            }
+            else{
+                faceButton.gameActive();
             }
             window.display();
         }

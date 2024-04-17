@@ -1,6 +1,8 @@
 #include "Button.h"
 
 class DebugButton : public Button{
+private:
+    bool debugActive = false;
 public:
     DebugButton(){
         setPosition(0, 0);
@@ -12,8 +14,12 @@ public:
     }
     bool buttonPressed(Vector2i mousePos){
         if(sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))){
+            debugActive = !debugActive;
             return true;
         }
         return false;
+    }
+    bool getDebugActive(){
+        return debugActive;
     }
 };
