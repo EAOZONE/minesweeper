@@ -108,6 +108,11 @@ void calculateNearbyBombs(){
                         return false;
                     }
                 }
+                else{
+                    if(board[i][j]->getState() == revealed){
+                        return false;
+                    }
+                }
             }
         }
         return true;
