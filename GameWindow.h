@@ -48,7 +48,7 @@ public:
                         board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
-                        leaderBoard.buttonPressed(sf::Mouse().getPosition(window));
+                        leaderBoard.buttonPressed(sf::Mouse().getPosition(window), numOfCols, numOfRows);
                         if(debugButton.buttonPressed(sf::Mouse().getPosition(window))){
                             for(int bombs = 0; bombs < numOfCols; bombs++){
                                 for(int b = 0; b < numOfRows; b++){
