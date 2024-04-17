@@ -10,6 +10,12 @@ public:
         setTexture(texture);
         setSprite();
     }
+    bool buttonClicked(Vector2i mousePos){
+        if(sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))){
+            return true;
+        }
+        return false;
+    }
     void gameWon(){
         setTexture("../Project 3 - Minesweeper Spring 2024/files/images/face_win.png");
         setSprite();
