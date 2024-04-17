@@ -46,16 +46,19 @@ public:
                 board.reset();
                 faceButton.gameActive();
             }
+
             for(int i = 0; i < numOfCols; i++){
                 for(int j = 0; j < numOfRows; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
                     if (sf::Mouse().isButtonPressed(Mouse::Right)) {
                         //TODO: Set right click only happen once
-                        board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
+                        if (!board.checkLose()) {
+                            board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
+                        }
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
                         leaderBoard.buttonPressed(sf::Mouse().getPosition(window), numOfCols, numOfRows);
-                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window))){
+                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && !board.checkLose()){
                             for(int bombs = 0; bombs < numOfCols; bombs++){
                                 for(int b = 0; b < numOfRows; b++){
                                     if(board.getBoard()[bombs][b]->getIsMine()){
@@ -64,7 +67,7 @@ public:
                                 }
                             }
                         }
-                        else if(pausePlayButton.ButtonClciked(sf::Mouse().getPosition(window))) {
+                        else if(!board.checkLose() && pausePlayButton.ButtonClciked(sf::Mouse().getPosition(window))) {
                             if (!pausePlayButton.getPause()) {
                                 for (int l = 0; l < numOfCols; l++) {
                                     for (int m = 0; m < numOfRows; m++) {
@@ -79,7 +82,9 @@ public:
                                 }
                             }
                         }
-                        board.openTile(sf::Mouse().getPosition(window), i, j);
+                        if(!board.checkLose()) {
+                            board.openTile(sf::Mouse().getPosition(window), i, j);
+                        }
                     }
 
                 }
@@ -91,7 +96,7 @@ public:
             else if(board.checkLose() && !debugButton.getDebugActive()){
                 faceButton.gameLose();
             }
-            else{
+            else if(!board.checkLose()){
                 faceButton.gameActive();
             }
             window.display();
