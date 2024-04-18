@@ -15,6 +15,7 @@ private:
     int numOfBombs;
     string PlayerName;
     sf::Font font;
+    bool gameActive;
 public:
     GameWindow(int rows, int cols, int bombs, string name): numOfCols(rows), numOfRows(cols), numOfBombs(bombs), PlayerName(name){
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
@@ -37,6 +38,7 @@ public:
                     window.close();
                 }
             }
+            gameActive = !board.checkLose() || debugButton.getDebugActive();
             window.clear(sf::Color::White);
             window.draw(debugButton.sprite);
             window.draw(pausePlayButton.sprite);
@@ -51,13 +53,13 @@ public:
                     window.draw(board.getBoard()[i][j]->sprite);
                     if (sf::Mouse().isButtonPressed(Mouse::Right)) {
                         //TODO: Set right click only happen once
-                        if (!board.checkLose()) {
+                        if (gameActive) {
                             board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                         }
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
                         leaderBoard.buttonPressed(sf::Mouse().getPosition(window), numOfCols, numOfRows);
-                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && !board.checkLose()){
+                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && gameActive){
                             for(int bombs = 0; bombs < numOfCols; bombs++){
                                 for(int b = 0; b < numOfRows; b++){
                                     if(board.getBoard()[bombs][b]->getIsMine()){
@@ -66,7 +68,10 @@ public:
                                 }
                             }
                         }
-                        else if(!board.checkLose() && pausePlayButton.ButtonClicked(sf::Mouse().getPosition(window))) {
+                        //TODO: fix pause button as openTile is not working
+                        else if(gameActive && pausePlayButton.ButtonClicked(sf::Mouse().getPosition(window))) {
+                            pausePlayButton.updateButtonTexture();
+                            }
                             if (!pausePlayButton.getPause()) {
                                 for (int l = 0; l < numOfCols; l++) {
                                     for (int m = 0; m < numOfRows; m++) {
@@ -78,7 +83,6 @@ public:
                                     for (int m = 0; m < numOfRows; m++) {
                                         board.returnToNormal(l, m);
                                     }
-                                }
                             }
                         }
                         board.openTile(sf::Mouse().getPosition(window), i, j);
@@ -89,12 +93,15 @@ public:
             if(board.checkWin()) {
                 board.setAllFlags();
                 faceButton.gameWon();
+                gameActive = false;
             }
-            else if(board.checkLose() && !debugButton.getDebugActive()){
+            else if(!gameActive && !debugButton.getDebugActive()){
                 faceButton.gameLose();
+                gameActive = false;
             }
-            else if(!board.checkLose()){
+            else if(gameActive){
                 faceButton.gameActive();
+                gameActive = true;
             }
             window.display();
         }
