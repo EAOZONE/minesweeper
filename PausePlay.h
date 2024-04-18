@@ -3,6 +3,7 @@
 class PausePlay : public Button{
 private:
     bool pause;
+    bool buttonPressed;
 public:
     PausePlay(){
         setPosition(0,0);
@@ -13,15 +14,17 @@ public:
         setTexture(texture);
         setSprite();
         pause = false;
+        buttonPressed = false;
     }
     bool ButtonClicked(Vector2i mousePos) {
         // Check if the mouse position is within the bounds of the button
         if (sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
             // Toggle the pause state
             pause = !pause;
-
+            buttonPressed = true;
             return true;
         }
+        buttonPressed = false;
         return false;
     }
 
@@ -38,5 +41,8 @@ public:
     }
     bool getPause(){
         return pause;
+    }
+    bool getButtonPressed(){
+        return buttonPressed;
     }
 };

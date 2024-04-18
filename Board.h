@@ -9,6 +9,7 @@ private:
     int numOfBombs;
     int mouseState = 0;
     bool bombExploded;
+    bool allOpen;
 public:
     Board(int numOfRows, int numOfCols, int numOfBombs){
         this->numOfRows = numOfRows;
@@ -20,6 +21,7 @@ public:
                 board[i][j] = new Tile(i*32, j*32, "../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
             }
         }
+        allOpen = false;
 }
 ~Board(){
         for(int i = 0; i <numOfRows; i++){
@@ -164,9 +166,11 @@ void calculateNearbyBombs(){
     }
     void openAll(int i, int j){
         board[i][j]->setOpen();
+        allOpen = true;
     }
     void returnToNormal(int i, int j){
         board[i][j]->backToNormal();
+        allOpen = false;
 
     }
     void reset(){
@@ -190,5 +194,8 @@ void calculateNearbyBombs(){
                 }
             }
         }
+    }
+    bool getAllOpen(){
+        return allOpen;
     }
 };

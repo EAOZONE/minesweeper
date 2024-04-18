@@ -16,6 +16,7 @@ private:
     string PlayerName;
     sf::Font font;
     bool gameActive;
+    bool paused;
 public:
     GameWindow(int rows, int cols, int bombs, string name): numOfCols(rows), numOfRows(cols), numOfBombs(bombs), PlayerName(name){
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
@@ -53,13 +54,13 @@ public:
                     window.draw(board.getBoard()[i][j]->sprite);
                     if (sf::Mouse().isButtonPressed(Mouse::Right)) {
                         //TODO: Set right click only happen once
-                        if (gameActive) {
+                        if (gameActive && !paused) {
                             board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                         }
                     }
                     else if (sf::Mouse().isButtonPressed(Mouse::Left)){
                         leaderBoard.buttonPressed(sf::Mouse().getPosition(window), numOfCols, numOfRows);
-                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && gameActive){
+                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && gameActive && !paused){
                             for(int bombs = 0; bombs < numOfCols; bombs++){
                                 for(int b = 0; b < numOfRows; b++){
                                     if(board.getBoard()[bombs][b]->getIsMine()){
@@ -72,20 +73,24 @@ public:
                         else if(gameActive && pausePlayButton.ButtonClicked(sf::Mouse().getPosition(window))) {
                             pausePlayButton.updateButtonTexture();
                             }
-                            if (!pausePlayButton.getPause()) {
-                                for (int l = 0; l < numOfCols; l++) {
-                                    for (int m = 0; m < numOfRows; m++) {
-                                        board.openAll(l, m);
-                                    }
+                        if (pausePlayButton.getPause() && pausePlayButton.getButtonPressed()) {
+                            for (int l = 0; l < numOfCols; l++) {
+                                for (int m = 0; m < numOfRows; m++) {
+                                    board.openAll(l, m);
                                 }
-                            } else {
-                                for (int l = 0; l < numOfCols; l++) {
-                                    for (int m = 0; m < numOfRows; m++) {
-                                        board.returnToNormal(l, m);
-                                    }
                             }
+                            paused = true;
+                        } else if(board.getAllOpen() && !pausePlayButton.getPause()) {
+                            for (int l = 0; l < numOfCols; l++) {
+                                for (int m = 0; m < numOfRows; m++) {
+                                    board.returnToNormal(l, m);
+                                }
+                            }
+                            paused = false;
                         }
+                        if(!paused && gameActive){
                         board.openTile(sf::Mouse().getPosition(window), i, j);
+                        }
                     }
 
                 }
