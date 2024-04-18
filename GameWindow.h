@@ -83,22 +83,21 @@ public:
                             }
                         }
                         if(!board.checkLose()) {
-                            board.openTile(sf::Mouse().getPosition(window), i, j);
+                            if(board.openTile(sf::Mouse().getPosition(window), i, j)) {
+                                if (board.checkWin()) {
+                                    board.setAllFlags();
+                                    faceButton.gameWon();
+                                } else if (board.checkLose() && !debugButton.getDebugActive()) {
+                                    faceButton.gameLose();
+                                    board.showAllBombs();
+                                } else if (!board.checkLose()) {
+                                    faceButton.gameActive();
+                                }
+                            }
                         }
                     }
 
                 }
-            }
-            if(board.checkWin()) {
-                board.setAllFlags();
-                faceButton.gameWon();
-            }
-            else if(board.checkLose() && !debugButton.getDebugActive()){
-                faceButton.gameLose();
-                board.showAllBombs();
-            }
-            else if(!board.checkLose()){
-                faceButton.gameActive();
             }
             window.display();
         }
