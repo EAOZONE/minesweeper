@@ -67,18 +67,19 @@ public:
                                 }
                             }
                         }
-                        else if(!board.checkLose() && pausePlayButton.ButtonClciked(sf::Mouse().getPosition(window))) {
-                            if (!pausePlayButton.getPause()) {
-                                for (int l = 0; l < numOfCols; l++) {
-                                    for (int m = 0; m < numOfRows; m++) {
-                                        board.openAll(l, m);
-                                    }
+                        else if(!board.checkLose() && pausePlayButton.ButtonClicked(sf::Mouse().getPosition(window))) {
+                            pausePlayButton.updateButtonTexture();
+                        }
+                        if (pausePlayButton.getPause()) {
+                            for (int l = 0; l < numOfCols; l++) {
+                                for (int m = 0; m < numOfRows; m++) {
+                                    board.openAll(l, m);
                                 }
-                            } else {
-                                for (int l = 0; l < numOfCols; l++) {
-                                    for (int m = 0; m < numOfRows; m++) {
-                                        board.returnToNormal(l, m);
-                                    }
+                            }
+                        } else {
+                            for (int l = 0; l < numOfCols; l++) {
+                                for (int m = 0; m < numOfRows; m++) {
+                                    board.returnToNormal(l, m);
                                 }
                             }
                         }
