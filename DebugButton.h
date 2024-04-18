@@ -14,12 +14,14 @@ public:
     }
     bool buttonPressed(Vector2i mousePos){
         if(sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))){
-            debugActive = !debugActive;
             return true;
         }
         return false;
     }
     bool getDebugActive(){
         return debugActive;
+    }
+    void setDebugActive(bool debugActive){
+        this->debugActive = debugActive;
     }
 };

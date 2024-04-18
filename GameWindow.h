@@ -17,6 +17,8 @@ private:
     sf::Font font;
     bool gameActive;
     bool paused;
+    bool leftButtonPressed = false;
+    bool rightButtonPressed = false;
 public:
     GameWindow(int rows, int cols, int bombs, string name): numOfCols(rows), numOfRows(cols), numOfBombs(bombs), PlayerName(name){
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
@@ -45,55 +47,71 @@ public:
             window.draw(pausePlayButton.sprite);
             window.draw(leaderBoard.sprite);
             window.draw(faceButton.sprite);
-            if(sf::Mouse().isButtonPressed(Mouse::Left) && faceButton.buttonClicked(sf::Mouse().getPosition(window))){
-                board.reset();
-                faceButton.gameActive();
-            }
             for(int i = 0; i < numOfCols; i++){
                 for(int j = 0; j < numOfRows; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
-                    if (sf::Mouse().isButtonPressed(Mouse::Right)) {
-                        //TODO: Set right click only happen once
-                        if (gameActive && !paused) {
+                }
+            }
+            if (sf::Mouse().isButtonPressed(Mouse::Right) && !rightButtonPressed) {
+                rightButtonPressed = true;
+                //TODO: Set right click only happen once
+                if (gameActive && !paused) {
+                    for (int i = 0; i < numOfCols; i++) {
+                        for (int j = 0; j < numOfRows; j++) {
                             board.mouseRightClicked(sf::Mouse().getPosition(window), i, j);
                         }
                     }
-                    else if (sf::Mouse().isButtonPressed(Mouse::Left)){
-                        leaderBoard.buttonPressed(sf::Mouse().getPosition(window), numOfCols, numOfRows);
-                        if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && gameActive && !paused){
-                            for(int bombs = 0; bombs < numOfCols; bombs++){
-                                for(int b = 0; b < numOfRows; b++){
-                                    if(board.getBoard()[bombs][b]->getIsMine()){
-                                        board.setDebug(bombs, b);
-                                    }
-                                }
+                }
+            }
+            else if(!sf::Mouse().isButtonPressed(Mouse::Right)){
+                rightButtonPressed = false;
+            }
+            if (sf::Mouse().isButtonPressed(Mouse::Left) && !leftButtonPressed){
+                leftButtonPressed = true;
+                if(faceButton.buttonClicked(sf::Mouse().getPosition(window))){
+                    board.reset();
+                    faceButton.gameActive();
+                }
+                leaderBoard.buttonPressed(sf::Mouse().getPosition(window), numOfCols, numOfRows);
+                if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && gameActive && !paused){
+                    debugButton.setDebugActive(!debugButton.getDebugActive());
+                    for(int bombs = 0; bombs < numOfCols; bombs++){
+                        for(int b = 0; b < numOfRows; b++){
+                            if(board.getBoard()[bombs][b]->getIsMine()){
+                                board.setDebug(bombs, b);
                             }
-                        }
-                        //TODO: fix pause button as openTile is not working
-                        else if(gameActive && pausePlayButton.ButtonClicked(sf::Mouse().getPosition(window))) {
-                            pausePlayButton.updateButtonTexture();
-                            }
-                        if (pausePlayButton.getPause() && pausePlayButton.getButtonPressed()) {
-                            for (int l = 0; l < numOfCols; l++) {
-                                for (int m = 0; m < numOfRows; m++) {
-                                    board.openAll(l, m);
-                                }
-                            }
-                            paused = true;
-                        } else if(board.getAllOpen() && !pausePlayButton.getPause()) {
-                            for (int l = 0; l < numOfCols; l++) {
-                                for (int m = 0; m < numOfRows; m++) {
-                                    board.returnToNormal(l, m);
-                                }
-                            }
-                            paused = false;
-                        }
-                        if(!paused && gameActive){
-                        board.openTile(sf::Mouse().getPosition(window), i, j);
                         }
                     }
-
                 }
+                //TODO: fix pause button as openTile is not working
+                else if(gameActive && pausePlayButton.ButtonClicked(sf::Mouse().getPosition(window))) {
+                    pausePlayButton.updateButtonTexture();
+                    }
+                if (pausePlayButton.getPause() && pausePlayButton.getButtonPressed()) {
+                    for (int l = 0; l < numOfCols; l++) {
+                        for (int m = 0; m < numOfRows; m++) {
+                            board.openAll(l, m);
+                        }
+                    }
+                    paused = true;
+                } else if(board.getAllOpen() && !pausePlayButton.getPause()) {
+                    for (int l = 0; l < numOfCols; l++) {
+                        for (int m = 0; m < numOfRows; m++) {
+                            board.returnToNormal(l, m);
+                        }
+                    }
+                    paused = false;
+                }
+                if(!paused && gameActive){
+                    for(int i = 0; i < numOfCols; i++) {
+                        for (int j = 0; j < numOfRows; j++) {
+                            board.openTile(sf::Mouse().getPosition(window), i, j);
+                        }
+                    }
+                }
+            }
+            else if(!sf::Mouse().isButtonPressed(Mouse::Left)){
+                leftButtonPressed = false;
             }
             if(board.checkWin()) {
                 board.setAllFlags();
