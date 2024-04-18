@@ -70,7 +70,7 @@ void calculateNearbyBombs(){
                 board[i][j]->removeFlag(mousePos);
             }
     }
-    void openTile(Vector2i mousePos, int i, int j) {
+    bool openTile(Vector2i mousePos, int i, int j) {
         if (board[i][j]->getState() == hidden && board[i][j]->getSprite().getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
             board[i][j]->openBox(mousePos);
             if (board[i][j]->getBombCount() == 0 && !board[i][j]->getIsMine()) {
@@ -80,6 +80,7 @@ void calculateNearbyBombs(){
             else if(board[i][j]->getIsMine()){
                 bombExploded = true;
             }
+            return true;
         }
     }
     void openOtherTiles(int i, int j) {
