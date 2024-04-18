@@ -46,7 +46,6 @@ public:
                 board.reset();
                 faceButton.gameActive();
             }
-
             for(int i = 0; i < numOfCols; i++){
                 for(int j = 0; j < numOfRows; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
@@ -68,37 +67,34 @@ public:
                             }
                         }
                         else if(!board.checkLose() && pausePlayButton.ButtonClicked(sf::Mouse().getPosition(window))) {
-                            pausePlayButton.updateButtonTexture();
-                        }
-                        if (pausePlayButton.getPause()) {
-                            for (int l = 0; l < numOfCols; l++) {
-                                for (int m = 0; m < numOfRows; m++) {
-                                    board.openAll(l, m);
+                            if (!pausePlayButton.getPause()) {
+                                for (int l = 0; l < numOfCols; l++) {
+                                    for (int m = 0; m < numOfRows; m++) {
+                                        board.openAll(l, m);
+                                    }
                                 }
-                            }
-                        } else {
-                            for (int l = 0; l < numOfCols; l++) {
-                                for (int m = 0; m < numOfRows; m++) {
-                                    board.returnToNormal(l, m);
-                                }
-                            }
-                        }
-                        if(!board.checkLose()) {
-                            if(board.openTile(sf::Mouse().getPosition(window), i, j)) {
-                                if (board.checkWin()) {
-                                    board.setAllFlags();
-                                    faceButton.gameWon();
-                                } else if (board.checkLose() && !debugButton.getDebugActive()) {
-                                    faceButton.gameLose();
-                                    board.showAllBombs();
-                                } else if (!board.checkLose()) {
-                                    faceButton.gameActive();
+                            } else {
+                                for (int l = 0; l < numOfCols; l++) {
+                                    for (int m = 0; m < numOfRows; m++) {
+                                        board.returnToNormal(l, m);
+                                    }
                                 }
                             }
                         }
+                        board.openTile(sf::Mouse().getPosition(window), i, j);
                     }
 
                 }
+            }
+            if(board.checkWin()) {
+                board.setAllFlags();
+                faceButton.gameWon();
+            }
+            else if(board.checkLose() && !debugButton.getDebugActive()){
+                faceButton.gameLose();
+            }
+            else if(!board.checkLose()){
+                faceButton.gameActive();
             }
             window.display();
         }
