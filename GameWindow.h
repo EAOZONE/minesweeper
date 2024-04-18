@@ -120,6 +120,7 @@ public:
             }
             else if(!gameActive && !debugButton.getDebugActive()){
                 faceButton.gameLose();
+                board.showAllBombs();
                 gameActive = false;
             }
             else if(gameActive){
