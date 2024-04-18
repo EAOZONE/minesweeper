@@ -95,6 +95,7 @@ public:
             }
             else if(board.checkLose() && !debugButton.getDebugActive()){
                 faceButton.gameLose();
+                board.showAllBombs();
             }
             else if(!board.checkLose()){
                 faceButton.gameActive();

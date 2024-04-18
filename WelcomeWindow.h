@@ -15,12 +15,19 @@ private:
     int sizeOfName;
     string name;
     sf::Font font;
+    float x;
+    float y;
+    string windowName;
 public:
-    WelcomeWindow():sizeOfName(10){
+    WelcomeWindow(float x, float y, string windowName){
+        this->sizeOfName = 10;
+        this->x = x;
+        this->y = y;
+        this->windowName = windowName;
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
     }
-    bool events(float x, float y, const string& name_){
-        sf::RenderWindow window(sf::VideoMode(x, y), name_);
+    bool events(){
+        sf::RenderWindow window(sf::VideoMode(x, y), windowName);
         while(window.isOpen()){
             sf::Event event{};
             while(window.pollEvent(event)){

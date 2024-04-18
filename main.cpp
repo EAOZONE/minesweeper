@@ -13,8 +13,8 @@ int main(){
         file>>height;
         file>>numOfBombs;
     }
-    WelcomeWindow welcomeWindow = WelcomeWindow();
-    bool startGame = welcomeWindow.events((width*32)+100, height*32, "My window");
+    WelcomeWindow welcomeWindow = WelcomeWindow((width*32)+100, height*32, "My window");
+    bool startGame = welcomeWindow.events();
     if(startGame){
         GameWindow gameWindow = GameWindow(width, height, numOfBombs, welcomeWindow.getName());
         gameWindow.gamePlay();

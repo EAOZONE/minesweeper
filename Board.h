@@ -176,4 +176,17 @@ void calculateNearbyBombs(){
         setBombs();
         calculateNearbyBombs();
     }
+    void showAllBombs(){
+        for(int i = 0; i < numOfRows; i++){
+            for(int j = 0; j < numOfCols; j++){
+                if(board[i][j]->getIsMine()){
+                    if(board[i][j]->getState() == hidden) {
+                        board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
+                        board[i][j]->setSprite();
+                        board[i][j]->setState(revealed);
+                    }
+                }
+            }
+        }
+    }
 };
