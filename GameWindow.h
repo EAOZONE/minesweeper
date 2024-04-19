@@ -48,9 +48,9 @@ public:
             window.draw(pausePlayButton.sprite);
             window.draw(leaderBoard.sprite);
             window.draw(faceButton.sprite);
-            for (int i = 0; i < 3; i++) {
-                window.draw(board.getCounter().getDigits()[i]);
-            }
+//            for (int i = 0; i < 3; i++) {
+//                window.draw(board.getCounter().getDigits()[i]);
+//            }
             for(int i = 0; i < numOfCols; i++){
                 for(int j = 0; j < numOfRows; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
