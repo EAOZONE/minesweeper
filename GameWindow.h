@@ -13,6 +13,7 @@ private:
     int numOfCols;
     int numOfRows;
     int numOfBombs;
+    int numOfFlagsPlaced;
     string PlayerName;
     sf::Font font;
     bool gameActive;
@@ -47,9 +48,13 @@ public:
             window.draw(pausePlayButton.sprite);
             window.draw(leaderBoard.sprite);
             window.draw(faceButton.sprite);
+            numOfFlagsPlaced = 0;
             for(int i = 0; i < numOfCols; i++){
                 for(int j = 0; j < numOfRows; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
+                    if(board.getBoard()[i][j]->getState() == flag){
+                        numOfFlagsPlaced++;
+                    }
                 }
             }
             if (sf::Mouse().isButtonPressed(Mouse::Right) && !rightButtonPressed) {
