@@ -20,6 +20,7 @@ private:
     bool paused;
     bool leftButtonPressed = false;
     bool rightButtonPressed = false;
+    int numOfFlagsPlaced;
 public:
     GameWindow(int rows, int cols, int bombs, string name): numOfCols(rows), numOfRows(cols), numOfBombs(bombs), PlayerName(name){
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");

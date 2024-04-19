@@ -40,6 +40,7 @@ public:
             setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
             setSprite();
             state = hidden;
+
         }
     }
     void openBox(Vector2i mousePosition) {
