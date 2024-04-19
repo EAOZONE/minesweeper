@@ -95,6 +95,7 @@ public:
         setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
         setSprite();
     }
+
     void backToNormal(){
         if(state == flag){
             setTexture("../Project 3 - Minesweeper Spring 2024/files/images/flag.png");

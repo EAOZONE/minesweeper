@@ -54,7 +54,6 @@ public:
             }
             if (sf::Mouse().isButtonPressed(Mouse::Right) && !rightButtonPressed) {
                 rightButtonPressed = true;
-                //TODO: Set right click only happen once
                 if (gameActive && !paused) {
                     for (int i = 0; i < numOfCols; i++) {
                         for (int j = 0; j < numOfRows; j++) {
@@ -70,7 +69,10 @@ public:
                 leftButtonPressed = true;
                 if(faceButton.buttonClicked(sf::Mouse().getPosition(window))){
                     board.reset();
+                    board.setBombs();
+                    board.calculateNearbyBombs();
                     faceButton.gameActive();
+                    gameActive = true;
                 }
                 leaderBoard.buttonPressed(sf::Mouse().getPosition(window), numOfCols, numOfRows);
                 if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && gameActive && !paused){
@@ -131,6 +133,7 @@ public:
         }
 
     }
+
     sf::Text drawWord(string word, float pos_x, float pos_y){
         sf::Text text(word, font);
         text.setCharacterSize(30);
