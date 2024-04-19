@@ -23,24 +23,28 @@ public:
         state = hidden;
     }
 
-    void placeFlag(Vector2i mousePosition){
+    bool placeFlag(Vector2i mousePosition){
         if (sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))){
             setTexture("../Project 3 - Minesweeper Spring 2024/files/images/flag.png");
             setSprite();
             state = flag;
+            return true;
         }
+        return false;
     }
     void placeFlag(){
         setTexture("../Project 3 - Minesweeper Spring 2024/files/images/flag.png");
         setSprite();
         state = flag;
     }
-    void removeFlag(Vector2i mousePosition){
+    bool removeFlag(Vector2i mousePosition){
         if(sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))){
             setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
             setSprite();
             state = hidden;
+            return true;
         }
+        return false;
     }
     void openBox(Vector2i mousePosition) {
         if (sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))) {
