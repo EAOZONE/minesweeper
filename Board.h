@@ -1,4 +1,4 @@
-#include "FaceButton.h"
+#include "Counter.h"
 
 
 class Board{
@@ -10,6 +10,7 @@ private:
     int mouseState = 0;
     bool bombExploded;
     bool allOpen;
+    Counter counter;
 public:
     Board(int numOfRows, int numOfCols, int numOfBombs){
         this->numOfRows = numOfRows;
@@ -22,6 +23,7 @@ public:
             }
         }
         allOpen = false;
+        counter = Counter(numOfBombs, numOfRows);
 }
 ~Board(){
         for(int i = 0; i <numOfRows; i++){
@@ -68,8 +70,10 @@ void calculateNearbyBombs(){
     void mouseRightClicked(Vector2i mousePos, int i, int j) {
             if (board[i][j]->getState() == hidden) {
                 board[i][j]->placeFlag(mousePos);
+                counter.subtract();
             } else if (board[i][j]->getState() == flag) {
                 board[i][j]->removeFlag(mousePos);
+                counter.add();
             }
     }
     bool openTile(Vector2i mousePos, int i, int j) {
@@ -158,6 +162,16 @@ void calculateNearbyBombs(){
             board[i][j]->setSprite();
             board[i][j]->setState(revealed);
         }
+        else if(board[i][j]->getState() == flag){
+            board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
+            board[i][j]->setSprite();
+            board[i][j]->setState(flagBomb);
+        }
+        else if(board[i][j]->getState() ==flagBomb){
+            board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            board[i][j]->setSprite();
+            board[i][j]->setState(flag);
+        }
         else if(board[i][j]->getState() == revealed){
             board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
             board[i][j]->setSprite();
@@ -189,6 +203,10 @@ void calculateNearbyBombs(){
                         board[i][j]->setSprite();
                         board[i][j]->setState(revealed);
                     }
+                    if(board[i][j]->getState() == flag){
+                        board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
+                        board[i][j]->setSprite();
+                    }
                 }
             }
         }
@@ -198,5 +216,8 @@ void calculateNearbyBombs(){
     }
     sf::Sprite getFlag(int i, int j){
         return board[i][j]->flagSprite.sprite;
+    }
+    sf::Sprite getCounter(int i){
+        return counter.getDigits(i);
     }
 };

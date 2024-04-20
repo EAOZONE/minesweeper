@@ -1,5 +1,6 @@
 enum type{
     hidden,
     revealed,
-    flag
+    flag,
+    flagBomb
 };

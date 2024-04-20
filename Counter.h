@@ -9,7 +9,7 @@ public:
     Counter(){
 
     }
-    Counter(float x, float y, int numOfBombs, int numOfRows) {
+    Counter(int numOfBombs, int numOfRows) {
         int update = numOfBombs;
         digits[2] = update % 10;
         update = update / 10;
@@ -17,7 +17,7 @@ public:
         update = update / 10;
         digits[0] = update % 10;
         sf::Texture texture;
-        texture.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/images/digits.png");
+        texture.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/images/face_happy.png");
         this->sprites[0] = Sprite(texture);
         this->sprites[1] = Sprite(texture);
         this->sprites[2] = Sprite(texture);
@@ -73,7 +73,7 @@ public:
         this->sprites[1].setTextureRect(IntRect(0 + 21 * this->digits[1], 0, 21, 32));
         this->sprites[2].setTextureRect(IntRect(0 + 21 * this->digits[2], 0, 21, 32));
     }
-    Sprite* getDigits(){
-        return sprites;
+    Sprite getDigits(int i){
+        return sprites[i];
     }
 };
