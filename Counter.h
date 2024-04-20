@@ -6,24 +6,22 @@ private:
     Sprite sprites[3];
     int digits[3];
 public:
-    Counter(){
+    Counter(int numOfBombs, int numOfCols) {
 
-    }
-    Counter(int numOfBombs, int numOfRows) {
         int update = numOfBombs;
-        digits[2] = update % 10;
+        this->digits[2] = update % 10;
         update = update / 10;
-        digits[1] = update % 10;
+        this->digits[1] = update % 10;
         update = update / 10;
-        digits[0] = update % 10;
-        sf::Texture texture;
-        texture.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/images/face_happy.png");
+        this->digits[0] = update % 10;
+        setPosition(33, (numOfCols+.5)*32 + 16);
+        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/digits.png");
         this->sprites[0] = Sprite(texture);
         this->sprites[1] = Sprite(texture);
         this->sprites[2] = Sprite(texture);
-        this->sprites[0].setPosition(33, 32 * (numOfRows + .5) + 16);
-        this->sprites[1].setPosition(54, 32 * (numOfRows + .5) + 16);
-        this->sprites[2].setPosition(75, 32 * (numOfRows + .5) + 16);
+        this->sprites[0].setPosition(position);
+        this->sprites[1].setPosition(position.x+21, position.y);
+        this->sprites[2].setPosition(position.x+42, position.y);
         this->sprites[0].setTextureRect(IntRect(0 + 21 * this->digits[0], 0, 21, 32));
         this->sprites[1].setTextureRect(IntRect(0 + 21 * this->digits[1], 0, 21, 32));
         this->sprites[2].setTextureRect(IntRect(0 + 21 * this->digits[2], 0, 21, 32));
@@ -74,6 +72,6 @@ public:
         this->sprites[2].setTextureRect(IntRect(0 + 21 * this->digits[2], 0, 21, 32));
     }
     Sprite getDigits(int i){
-        return sprites[i];
+        return this->sprites[i];
     }
 };

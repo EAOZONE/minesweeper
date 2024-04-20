@@ -10,7 +10,7 @@ private:
     int mouseState = 0;
     bool bombExploded;
     bool allOpen;
-    Counter counter;
+    Counter* counter;
 public:
     Board(int numOfRows, int numOfCols, int numOfBombs){
         this->numOfRows = numOfRows;
@@ -23,7 +23,7 @@ public:
             }
         }
         allOpen = false;
-        counter = Counter(numOfBombs, numOfRows);
+        counter = new Counter(numOfBombs, numOfCols);
 }
 ~Board(){
         for(int i = 0; i <numOfRows; i++){
@@ -69,11 +69,15 @@ void calculateNearbyBombs(){
     }
     void mouseRightClicked(Vector2i mousePos, int i, int j) {
             if (board[i][j]->getState() == hidden) {
-                board[i][j]->placeFlag(mousePos);
-                counter.subtract();
+                if(board[i][j]->placeFlag(mousePos)){
+                    counter->subtract();
+                }
+
             } else if (board[i][j]->getState() == flag) {
-                board[i][j]->removeFlag(mousePos);
-                counter.add();
+                if(board[i][j]->removeFlag(mousePos)){
+                    counter->add();
+                }
+
             }
     }
     bool openTile(Vector2i mousePos, int i, int j) {
@@ -139,22 +143,15 @@ void calculateNearbyBombs(){
         for(int i = 0; i < numOfRows; i++){
             for(int j =0; j < numOfCols; j++){
                 if(board[i][j]->getIsMine()){
-                    board[i][j]->placeFlag();
+                    if(board[i][j]->placeFlag()){
+                        //counter->subtract();
+                    }
                 }
             }
         }
     }
     const vector<vector<Tile*>>& getBoard() const{
         return board;
-    }
-    void setMouseState(int mouseState){
-        this->mouseState = mouseState;
-    }
-    int getMouseState(){
-        return mouseState;
-    }
-    bool getBombExploded(){
-        return bombExploded;
     }
     void setDebug(int i, int j){
         if(board[i][j]->getState() == hidden) {
@@ -218,6 +215,6 @@ void calculateNearbyBombs(){
         return board[i][j]->flagSprite.sprite;
     }
     sf::Sprite getCounter(int i){
-        return counter.getDigits(i);
+        return counter->getDigits(i);
     }
 };
