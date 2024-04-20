@@ -54,6 +54,9 @@ public:
             for(int i = 0; i < numOfCols; i++){
                 for(int j = 0; j < numOfRows; j++) {
                     window.draw(board.getBoard()[i][j]->sprite);
+                    if(board.getBoard()[i][j]->getState() == flag){
+                        window.draw(board.getFlag(i, j));
+                    }
                 }
             }
             if (sf::Mouse().isButtonPressed(Mouse::Right) && !rightButtonPressed) {

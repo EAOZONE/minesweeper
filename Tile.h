@@ -1,4 +1,4 @@
-#include "GameObject.h"
+#include "Flag.h"
 #include "States.h"
 #include <string>
 using namespace std;
@@ -10,10 +10,12 @@ private:
     int bombCount;
     vector<Tile*> adjacentTiles;
 public:
+    Flag flagSprite = Flag();
     Tile(){
         setPosition(0, 0);
         isMine = false;
         state = hidden;
+        flagSprite.setNewPosition(0, 0);
     }
     Tile(float x, float y, string texture){
         setPosition(x, y);
@@ -21,18 +23,17 @@ public:
         setSprite();
         isMine = false;
         state = hidden;
+        flagSprite.setNewPosition(x, y);
     }
 
     void placeFlag(Vector2i mousePosition){
         if (sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))){
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/flag.png");
-            setSprite();
+
             state = flag;
         }
     }
     void placeFlag(){
-        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/flag.png");
-        setSprite();
+
         state = flag;
     }
     void removeFlag(Vector2i mousePosition){
@@ -98,11 +99,7 @@ public:
     }
 
     void backToNormal(){
-        if(state == flag){
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/flag.png");
-            setSprite();
-        }
-        else if(state != hidden) {
+        if(state != hidden) {
             if (isMine) {
                 setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
                 setSprite();
