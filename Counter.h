@@ -5,9 +5,10 @@ class Counter : public GameObject{
 private:
     Sprite sprites[3];
     int digits[3];
+    int numOfBombs;
 public:
     Counter(int numOfBombs, int numOfCols) {
-
+        this->numOfBombs = numOfBombs;
         int update = numOfBombs;
         this->digits[2] = update % 10;
         update = update / 10;
@@ -67,6 +68,17 @@ public:
         } else if (this->digits[2] != 9 && this->digits[0] == 10 && this->digits[1] > 0) {
             this->digits[2]--;
         }
+        this->sprites[0].setTextureRect(IntRect(0 + 21 * this->digits[0], 0, 21, 32));
+        this->sprites[1].setTextureRect(IntRect(0 + 21 * this->digits[1], 0, 21, 32));
+        this->sprites[2].setTextureRect(IntRect(0 + 21 * this->digits[2], 0, 21, 32));
+    }
+    void reset(){
+        int update = numOfBombs;
+        this->digits[2] = update % 10;
+        update = update / 10;
+        this->digits[1] = update % 10;
+        update = update / 10;
+        this->digits[0] = update % 10;
         this->sprites[0].setTextureRect(IntRect(0 + 21 * this->digits[0], 0, 21, 32));
         this->sprites[1].setTextureRect(IntRect(0 + 21 * this->digits[1], 0, 21, 32));
         this->sprites[2].setTextureRect(IntRect(0 + 21 * this->digits[2], 0, 21, 32));

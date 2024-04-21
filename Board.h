@@ -185,6 +185,7 @@ void calculateNearbyBombs(){
 
     }
     void reset(){
+        counter->reset();
         for(int i = 0; i < numOfRows; i++){
             for(int j = 0; j < numOfCols; j++){
                 board[i][j] = new Tile(i*32, j*32, "../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
