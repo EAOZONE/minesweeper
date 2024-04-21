@@ -34,14 +34,6 @@ public:
     void resumeClock(){
         clock.restart();
     }
-    sf::Time getElapsedTime() const{
-        if(paused){
-            return totalElapsedTime;
-        }
-        else{
-            return totalElapsedTime + clock.getElapsedTime();
-        }
-    }
     void gamePlay() {
         sf::RenderWindow window(sf::VideoMode(numOfCols * 32, numOfRows * 32 + 100), "GameScreen");
         Board board = Board(numOfCols, numOfRows, numOfBombs);
@@ -62,7 +54,7 @@ public:
             }
             sf::Time elapsed = clock.getElapsedTime();
             totalElapsedTime += elapsed;
-            if (!paused && elapsed.asSeconds() >= 1)
+            if (gameActive && !paused && elapsed.asSeconds() >= 1)
             {
                 clock.restart();
                 seconds++;
@@ -112,6 +104,9 @@ public:
             if (sf::Mouse().isButtonPressed(Mouse::Left) && !leftButtonPressed){
                 leftButtonPressed = true;
                 if(faceButton.buttonClicked(sf::Mouse().getPosition(window))){
+                    seconds = 0;
+                    minutes = 0;
+                    clock.restart();
                     board.reset();
                     board.setBombs();
                     board.calculateNearbyBombs();
@@ -165,11 +160,16 @@ public:
                 board.setAllFlags();
                 faceButton.gameWon();
                 gameActive = false;
+                pauseClock();
+                if(!leaderBoard.getUpdated()){
+                    leaderBoard.checkTime(minutes, seconds, PlayerName);
+                }
             }
             else if(!gameActive && !debugButton.getDebugActive()){
                 faceButton.gameLose();
                 board.showAllBombs();
                 gameActive = false;
+                pauseClock();
             }
             else if(gameActive){
                 faceButton.gameActive();

@@ -1,11 +1,14 @@
 #include "PausePlay.h"
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 class LeaderBoard : public Button {
 private:
     string leaderBoard;
     sf::Font font;
+    map<string, int> leaderBoardTimes;
+    bool updated = false;
 public:
     LeaderBoard() {
         setPosition(0, 0);
@@ -19,6 +22,7 @@ public:
     }
 
     void readTopFive(string file) {
+        leaderBoard = "";
         ifstream input_file(file);
         string line;
         if (!input_file.is_open()) {
@@ -27,15 +31,21 @@ public:
         int numOfIters = 1;
         while (getline(input_file, line)) {
             istringstream iss(line);
-            string name, number;
-            getline(iss, name, ',');
-            getline(iss, number, ',');
+            string name;
+            string minutes;
+            string seconds;
+            getline(iss, minutes, ':');
+            getline(iss, seconds, ',');
+            getline(iss, name);
+            leaderBoardTimes[name] = stoi(minutes+seconds);
             leaderBoard += to_string(numOfIters);
             leaderBoard += ".";
             leaderBoard += "\t";
             leaderBoard += name;
             leaderBoard += "\t";
-            leaderBoard += number;
+            leaderBoard += minutes;
+            leaderBoard += ":";
+            leaderBoard += seconds;
             leaderBoard += "\n\n";
             numOfIters++;
 
@@ -66,6 +76,35 @@ public:
         text.setFillColor(sf::Color::White);
         setText(text, pos_x, pos_y);
         return text;
+    }
+    void checkTime(int minutes, int seconds, string name){
+        updated = true;
+        leaderBoardTimes[" "+name] = stoi(to_string(minutes)+ to_string(seconds));
+        std::vector<std::pair<string, int>> vec(leaderBoardTimes.begin(), leaderBoardTimes.end());
+
+        // Sort the vector based on the values
+        std::sort(vec.begin(), vec.end(), [](const auto& a, const auto& b) {
+            return a.second < b.second;
+        });
+        vec.pop_back();
+        leaderBoardTimes.clear();
+        for(const auto& pair: vec){
+            leaderBoardTimes[pair.first] = pair.second;
+            cout<<pair.first<< ":"<<pair.second<<endl;
+        }
+        rewriteLeaderboardFile();
+        readTopFive("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
+    }
+
+    void rewriteLeaderboardFile(){
+        ofstream output_file("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
+        for(const auto& pair : leaderBoardTimes){
+            output_file<<setw(2)<<setfill('0')<<pair.second/100 <<":"<<setw(2)<<setfill('0')<<pair.second%100<<","<<pair.first<<endl;
+        }
+        output_file.close();
+    }
+    bool getUpdated(){
+        return updated;
     }
 
 };
