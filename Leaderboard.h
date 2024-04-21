@@ -7,7 +7,7 @@ class LeaderBoard : public Button {
 private:
     string leaderBoard;
     sf::Font font;
-    map<string, int> leaderBoardTimes;
+    map<int, string> leaderBoardTimes;
     bool updated = false;
 public:
     LeaderBoard() {
@@ -37,7 +37,7 @@ public:
             getline(iss, minutes, ':');
             getline(iss, seconds, ',');
             getline(iss, name);
-            leaderBoardTimes[name] = stoi(minutes+seconds);
+            leaderBoardTimes[stoi(minutes+seconds)] = name;
             leaderBoard += to_string(numOfIters);
             leaderBoard += ".";
             leaderBoard += "\t";
@@ -79,12 +79,12 @@ public:
     }
     void checkTime(int minutes, int seconds, string name){
         updated = true;
-        leaderBoardTimes[" "+name] = stoi(to_string(minutes)+ to_string(seconds));
-        std::vector<std::pair<string, int>> vec(leaderBoardTimes.begin(), leaderBoardTimes.end());
+        leaderBoardTimes[stoi(to_string(minutes)+ to_string(seconds))] = " "+name;
+        std::vector<std::pair<int, string>> vec(leaderBoardTimes.begin(), leaderBoardTimes.end());
 
         // Sort the vector based on the values
         std::sort(vec.begin(), vec.end(), [](const auto& a, const auto& b) {
-            return a.second < b.second;
+            return a.first < b.first;
         });
         vec.pop_back();
         leaderBoardTimes.clear();
@@ -99,7 +99,8 @@ public:
     void rewriteLeaderboardFile(){
         ofstream output_file("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
         for(const auto& pair : leaderBoardTimes){
-            output_file<<setw(2)<<setfill('0')<<pair.second/100 <<":"<<setw(2)<<setfill('0')<<pair.second%100<<","<<pair.first<<endl;
+            cout<<pair.first<<pair.second<<endl;
+            output_file<<setw(2)<<setfill('0')<<pair.first/100 <<":"<<setw(2)<<setfill('0')<<pair.first%100<<","<<pair.second<<endl;
         }
         output_file.close();
     }
