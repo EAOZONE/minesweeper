@@ -83,6 +83,14 @@ public:
         this->sprites[1].setTextureRect(IntRect(0 + 21 * this->digits[1], 0, 21, 32));
         this->sprites[2].setTextureRect(IntRect(0 + 21 * this->digits[2], 0, 21, 32));
     }
+    void setToZero(){
+        this->digits[2] = 0;
+        this->digits[1] = 0;
+        this->digits[0] = 0;
+        this->sprites[0].setTextureRect(IntRect(0 + 21 * this->digits[0], 0, 21, 32));
+        this->sprites[1].setTextureRect(IntRect(0 + 21 * this->digits[1], 0, 21, 32));
+        this->sprites[2].setTextureRect(IntRect(0 + 21 * this->digits[2], 0, 21, 32));
+    }
     Sprite getDigits(int i){
         return this->sprites[i];
     }

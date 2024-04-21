@@ -144,7 +144,7 @@ void calculateNearbyBombs(){
             for(int j =0; j < numOfCols; j++){
                 if(board[i][j]->getIsMine()){
                     if(board[i][j]->placeFlag()){
-                        //counter->subtract();
+                        counter->setToZero();
                     }
                 }
             }
