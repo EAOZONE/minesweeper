@@ -19,17 +19,35 @@ private:
     bool paused;
     bool leftButtonPressed = false;
     bool rightButtonPressed = false;
-    int numOfFlagsPlaced;
+    sf::Clock clock;
+    int minutes = 0;
+    int seconds = 0;
+    Timer* timer;
+    sf::Time totalElapsedTime;
 public:
     GameWindow(int rows, int cols, int bombs, string name): numOfCols(rows), numOfRows(cols), numOfBombs(bombs), PlayerName(name){
         font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
+    }
+    void pauseClock(){
+        totalElapsedTime += clock.getElapsedTime();
+    }
+    void resumeClock(){
+        clock.restart();
+    }
+    sf::Time getElapsedTime() const{
+        if(paused){
+            return totalElapsedTime;
+        }
+        else{
+            return totalElapsedTime + clock.getElapsedTime();
+        }
     }
     void gamePlay() {
         sf::RenderWindow window(sf::VideoMode(numOfCols * 32, numOfRows * 32 + 100), "GameScreen");
         Board board = Board(numOfCols, numOfRows, numOfBombs);
         board.setBombs();
         board.calculateNearbyBombs();
-
+        timer = new Timer((numOfCols*32)-97, 32*(numOfRows+0.5)+16, numOfCols, numOfRows);
         DebugButton debugButton = DebugButton((numOfCols * 32) - 304, 32 * (numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
         PausePlay pausePlayButton = PausePlay((numOfCols * 32) - 240, 32 * (numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/pause.png");
         LeaderBoard leaderBoard = LeaderBoard( (numOfCols * 32) - 176, 32*(numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/leaderboard.png");
@@ -42,6 +60,19 @@ public:
                     window.close();
                 }
             }
+            sf::Time elapsed = clock.getElapsedTime();
+            totalElapsedTime += elapsed;
+            if (!paused && elapsed.asSeconds() >= 1)
+            {
+                clock.restart();
+                seconds++;
+                if (seconds >= 60)
+                {
+                    minutes++;
+                    seconds = 0;
+                }
+            }
+            timer->update(seconds, minutes);
             gameActive = !board.checkLose() || debugButton.getDebugActive();
             window.clear(sf::Color::White);
             window.draw(debugButton.sprite);
@@ -50,6 +81,10 @@ public:
             window.draw(faceButton.sprite);
             for (int i = 0; i < 3; i++) {
                 window.draw(board.getCounter(i));
+            }
+            for(int i = 0; i <2; i++){
+                window.draw(timer->getMinutes(i));
+                window.draw(timer->getSeconds(i));
             }
             for(int i = 0; i < numOfCols; i++){
                 for(int j = 0; j < numOfRows; j++) {
@@ -104,6 +139,7 @@ public:
                             board.openAll(l, m);
                         }
                     }
+                    pauseClock();
                     paused = true;
                 } else if(board.getAllOpen() && !pausePlayButton.getPause()) {
                     for (int l = 0; l < numOfCols; l++) {
@@ -111,6 +147,7 @@ public:
                             board.returnToNormal(l, m);
                         }
                     }
+                    resumeClock();
                     paused = false;
                 }
                 if(!paused && gameActive){
