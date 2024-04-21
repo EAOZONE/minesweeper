@@ -112,6 +112,7 @@ public:
                     board.calculateNearbyBombs();
                     faceButton.gameActive();
                     gameActive = true;
+                    leaderBoard.setUpdated(false);
                 }
                 leaderBoard.buttonPressed(sf::Mouse().getPosition(window), numOfCols, numOfRows);
                 if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && gameActive && !paused){

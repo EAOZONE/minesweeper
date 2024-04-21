@@ -79,7 +79,18 @@ public:
     }
     void checkTime(int minutes, int seconds, string name){
         updated = true;
-        leaderBoardTimes[stoi(to_string(minutes)+ to_string(seconds))] = " "+name;
+        bool newName = true;
+        for(const auto& pair: leaderBoardTimes){
+            if(pair.second == name || pair.second == name+"*"){
+                newName = false;
+            }
+        }
+        if(newName) {
+            leaderBoardTimes[stoi(to_string(minutes) + to_string(seconds))] = " " + name+"*";
+        }
+        else{
+            leaderBoardTimes[stoi(to_string(minutes) + to_string(seconds))] = " " + name;
+        }
         std::vector<std::pair<int, string>> vec(leaderBoardTimes.begin(), leaderBoardTimes.end());
 
         // Sort the vector based on the values
@@ -107,5 +118,7 @@ public:
     bool getUpdated(){
         return updated;
     }
-
+    void setUpdated(bool updated){
+        this->updated = updated;
+    }
 };
