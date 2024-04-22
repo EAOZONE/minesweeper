@@ -85,12 +85,16 @@ public:
     void checkTime(int minutes, int seconds, string name){
         updated = true;
         bool newName = true;
+        for(auto& pair : leaderBoardTimes){
+            if(pair.second == " " + name + "*" || pair.second == " " + name){
+                newName = false;
+                break;
+            }
+        }
         if(newName) {
             leaderBoardTimes.emplace_back(stoi(to_string(minutes) + to_string(seconds)), " " + name+"*");
         }
-//        else{
-//            leaderBoardTimes.emplace_back(stoi(to_string(minutes) + to_string(seconds)), " " + name);
-//        }
+        newName = false;
         for(const auto& pair : leaderBoardTimes){
             cout<<pair.first<<pair.second<<endl;
         }
@@ -100,6 +104,7 @@ public:
             }
             return false;
         });
+
         if(leaderBoardTimes.size() > 5){
             leaderBoardTimes.resize(5);
         }
