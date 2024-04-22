@@ -212,6 +212,7 @@ void calculateNearbyBombs(){
     bool getAllOpen(){
         return allOpen;
     }
+
     sf::Sprite getFlag(int i, int j){
         return board[i][j]->flagSprite.sprite;
     }

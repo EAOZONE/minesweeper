@@ -60,6 +60,7 @@ public:
                     if (event.type == sf::Event::Closed) {
                         window.close();
                     }
+
                     sf::Text leaderBoardLine = drawWord("LeaderBoard", numOfCols*8, numOfRows*8-120, 20);
                     sf::Text leaderBoardContents = drawWord(leaderBoard, numOfCols*8, numOfRows*8 + 20, 18);
                     window.clear(sf::Color::Blue);
