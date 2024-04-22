@@ -218,4 +218,7 @@ void calculateNearbyBombs(){
     sf::Sprite getCounter(int i){
         return counter->getDigits(i);
     }
+    sf::Sprite getMine(int i, int j){
+        return board[i][j]->mineSprite.sprite;
+    }
 };
