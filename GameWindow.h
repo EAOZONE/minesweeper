@@ -87,9 +87,10 @@ public:
                     }
                     if(board.getBoard()[i][j]->getState() == flag && !paused)
                         window.draw(board.getFlag(i, j));
-
                     if((!gameActive || debugButton.getDebugActive()) && board.getBoard()[i][j]->getIsMine())
-                        window.draw(board.getBoard()[i][j]->sprite);
+                        window.draw(board.getBoard()[i][j]->mineSprite.sprite);
+                    if(board.getBoard()[i][j]->getState() == revealed && board.getBoard()[i][j]->getIsMine())
+                        window.draw(board.getBoard()[i][j]->mineSprite.sprite);
                 }
             }
             if (sf::Mouse().isButtonPressed(Mouse::Right) && !rightButtonPressed) {
