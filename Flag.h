@@ -1,4 +1,4 @@
-#include "GameObject.h"
+#include "numberTile.h"
 
 class Flag : public GameObject{
 public:
@@ -17,4 +17,5 @@ public:
         setTexture("../Project 3 - Minesweeper Spring 2024/files/images/flag.png");
         setSprite();
     }
+
 };

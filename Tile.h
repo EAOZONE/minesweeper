@@ -10,12 +10,14 @@ private:
     int bombCount;
     vector<Tile*> adjacentTiles;
 public:
+    numberTile numberSprite = numberTile();
     Flag flagSprite = Flag();
     Tile(){
         setPosition(0, 0);
         isMine = false;
         state = hidden;
         flagSprite.setNewPosition(0, 0);
+        numberSprite.setNewPosition(0, 0, "../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
     }
     Tile(float x, float y, string texture){
         setPosition(x, y);
@@ -24,6 +26,7 @@ public:
         isMine = false;
         state = hidden;
         flagSprite.setNewPosition(x, y);
+        numberSprite.setNewPosition(x, y, "../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
     }
 
     bool placeFlag(Vector2i mousePosition){
@@ -59,8 +62,10 @@ public:
                 setSprite();
             }
             else{
-                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/number_"+ to_string(bombCount)+".png");
+                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
                 setSprite();
+                numberSprite.setNewTexture("../Project 3 - Minesweeper Spring 2024/files/images/number_"+ to_string(bombCount)+".png");
+
             }
             state = revealed;
         }
@@ -71,8 +76,9 @@ public:
             setSprite();
         }
         else{
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/number_"+ to_string(bombCount)+".png");
+            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
             setSprite();
+            numberSprite.setNewTexture("../Project 3 - Minesweeper Spring 2024/files/images/number_"+ to_string(bombCount)+".png");
         }
         state = revealed;
     }
@@ -115,9 +121,9 @@ public:
                 setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
                 setSprite();
             } else {
-                setTexture(
-                        "../Project 3 - Minesweeper Spring 2024/files/images/number_" + to_string(bombCount) + ".png");
+                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
                 setSprite();
+                numberSprite.setNewTexture("../Project 3 - Minesweeper Spring 2024/files/images/number_"+ to_string(bombCount)+".png");
             }
             state = revealed;
         }
