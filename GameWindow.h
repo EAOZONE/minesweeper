@@ -119,7 +119,23 @@ public:
                     gameActive = true;
                     leaderBoard.setUpdated(false);
                 }
-                leaderBoard.buttonPressed(sf::Mouse().getPosition(window), numOfCols, numOfRows);
+
+                if(leaderBoard.buttonPressed(sf::Mouse().getPosition(window)))
+                {
+                    for (int l = 0; l < numOfCols; l++) {
+                        for (int m = 0; m < numOfRows; m++) {
+                            board.openAll(l, m);
+                            window.draw(board.getBoard()[l][m]->sprite);
+                        }
+                    }
+                    window.display();
+                    leaderBoard.drawWindow(numOfCols, numOfRows);
+                    for(int i = 0; i < numOfCols; i++) {
+                        for (int j = 0; j < numOfRows; j++) {
+                            board.openTile(sf::Mouse().getPosition(window), i, j);
+                        }
+                    }
+                }
                 if(debugButton.buttonPressed(sf::Mouse().getPosition(window)) && gameActive && !paused){
                     debugButton.setDebugActive(!debugButton.getDebugActive());
                     for(int bombs = 0; bombs < numOfCols; bombs++){

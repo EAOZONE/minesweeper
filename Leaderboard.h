@@ -51,23 +51,27 @@ public:
 
         }
     }
-    void buttonPressed(Vector2i mousePos, int numOfCols, int numOfRows) {
+    bool buttonPressed(Vector2i mousePos) {
         if (sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
-            sf::RenderWindow window(sf::VideoMode(numOfCols * 16, numOfRows * 16 + 50), "Leaderboard");
-            while (window.isOpen()) {
-                sf::Event event{};
-                while (window.pollEvent(event)) {
-                    if (event.type == sf::Event::Closed) {
-                        window.close();
-                    }
+            return true;
+        }
+    }
+    void drawWindow(int numOfCols, int numOfRows){
+        sf::RenderWindow window(sf::VideoMode(numOfCols * 16, numOfRows * 16 + 50), "Leaderboard");
 
-                    sf::Text leaderBoardLine = drawWord("LeaderBoard", numOfCols*8, numOfRows*8-120, 20);
-                    sf::Text leaderBoardContents = drawWord(leaderBoard, numOfCols*8, numOfRows*8 + 20, 18);
-                    window.clear(sf::Color::Blue);
-                    window.draw(leaderBoardLine);
-                    window.draw(leaderBoardContents);
-                    window.display();
+        while (window.isOpen()) {
+            sf::Event event{};
+            while (window.pollEvent(event)) {
+                if (event.type == sf::Event::Closed) {
+                    window.close();
                 }
+
+                sf::Text leaderBoardLine = drawWord("LeaderBoard", numOfCols*8, numOfRows*8-120, 20);
+                sf::Text leaderBoardContents = drawWord(leaderBoard, numOfCols*8, numOfRows*8 + 20, 18);
+                window.clear(sf::Color::Blue);
+                window.draw(leaderBoardLine);
+                window.draw(leaderBoardContents);
+                window.display();
             }
         }
     }

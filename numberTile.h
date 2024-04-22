@@ -1,4 +1,4 @@
-#include "GameObject.h"
+#include "Mine.h"
 #include <string>
 using namespace std;
 class numberTile : public GameObject{
