@@ -9,27 +9,21 @@ private:
     bool isMine;
     int bombCount;
     vector<Tile*> adjacentTiles;
-    bool mineShown;
 public:
     Flag flagSprite = Flag();
-    Mine mineSprite = Mine();
     Tile(){
         setPosition(0, 0);
-        mineShown = false;
         isMine = false;
         state = hidden;
         flagSprite.setNewPosition(0, 0);
-        mineSprite.setNewPosition(0, 0);
     }
     Tile(float x, float y, string texture){
-        mineShown = false;
         setPosition(x, y);
         setTexture(texture);
         setSprite();
         isMine = false;
         state = hidden;
         flagSprite.setNewPosition(x, y);
-        mineSprite.setNewPosition(x, y);
     }
 
     bool placeFlag(Vector2i mousePosition){
@@ -57,7 +51,8 @@ public:
     void openBox(Vector2i mousePosition) {
         if (sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))) {
             if (isMine) {
-                mineShown = true;
+                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/mine.png");
+                setSprite();
             }
             else if(bombCount == 0){
                 setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
@@ -130,8 +125,5 @@ public:
             setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
             setSprite();
         }
-    }
-    bool getMineShown(){
-        return mineShown;
     }
 };
