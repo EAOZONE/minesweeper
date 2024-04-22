@@ -7,7 +7,7 @@ class LeaderBoard : public Button {
 private:
     string leaderBoard;
     sf::Font font;
-    map<int, string> leaderBoardTimes;
+    vector<pair<int, string>> leaderBoardTimes;
     bool updated = false;
 public:
     LeaderBoard() {
@@ -37,7 +37,7 @@ public:
             getline(iss, minutes, ':');
             getline(iss, seconds, ',');
             getline(iss, name);
-            leaderBoardTimes[stoi(minutes+seconds)] = name;
+            leaderBoardTimes.push_back(make_pair(stoi(minutes + seconds), name));
             leaderBoard += to_string(numOfIters);
             leaderBoard += ".";
             leaderBoard += "\t";
@@ -85,28 +85,26 @@ public:
     void checkTime(int minutes, int seconds, string name){
         updated = true;
         bool newName = true;
-        for(const auto& pair: leaderBoardTimes){
-            if(pair.second == name || pair.second == name+"*"){
-                newName = false;
-            }
-        }
         if(newName) {
-            leaderBoardTimes[stoi(to_string(minutes) + to_string(seconds))] = " " + name+"*";
+            leaderBoardTimes.emplace_back(stoi(to_string(minutes) + to_string(seconds)), " " + name+"*");
         }
-        else{
-            leaderBoardTimes[stoi(to_string(minutes) + to_string(seconds))] = " " + name;
+//        else{
+//            leaderBoardTimes.emplace_back(stoi(to_string(minutes) + to_string(seconds)), " " + name);
+//        }
+        for(const auto& pair : leaderBoardTimes){
+            cout<<pair.first<<pair.second<<endl;
         }
-        std::vector<std::pair<int, string>> vec(leaderBoardTimes.begin(), leaderBoardTimes.end());
-
-        // Sort the vector based on the values
-        std::sort(vec.begin(), vec.end(), [](const auto& a, const auto& b) {
-            return a.first < b.first;
+        sort(leaderBoardTimes.begin(), leaderBoardTimes.end(), [](const auto& a, const auto& b){
+            if(a.first<b.first){
+                return true;
+            }
+            return false;
         });
-        vec.pop_back();
-        leaderBoardTimes.clear();
-        for(const auto& pair: vec){
-            leaderBoardTimes[pair.first] = pair.second;
-            cout<<pair.first<< ":"<<pair.second<<endl;
+        if(leaderBoardTimes.size() > 5){
+            leaderBoardTimes.resize(5);
+        }
+        for(const auto& pair : leaderBoardTimes){
+            cout<<pair.first<<pair.second<<endl;
         }
         rewriteLeaderboardFile();
         readTopFive("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
@@ -115,7 +113,6 @@ public:
     void rewriteLeaderboardFile(){
         ofstream output_file("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
         for(const auto& pair : leaderBoardTimes){
-            cout<<pair.first<<pair.second<<endl;
             output_file<<setw(2)<<setfill('0')<<pair.first/100 <<":"<<setw(2)<<setfill('0')<<pair.first%100<<","<<pair.second<<endl;
         }
         output_file.close();
