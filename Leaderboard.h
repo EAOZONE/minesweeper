@@ -2,7 +2,9 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
-
+bool comparePairs(const pair<int, string> &a, const pair<int, string> &b) {
+    return a.first < b.first;
+}
 class LeaderBoard : public Button {
 private:
     string leaderBoard;
@@ -87,35 +89,20 @@ public:
         bool newName = true;
         for(auto& pair : leaderBoardTimes){
             if(pair.second == " " + name + "*"){
-                newName = false;
-                if (pair.second == " " + name + "*") {
-                    pair.second = " " + name;
-                }
+                pair.second = " " + name;
                 break;
             }
         }
-        if(newName) {
             leaderBoardTimes.emplace_back(stoi(to_string(minutes) + to_string(seconds)), " " + name+"*");
-        }
-        newName = false;
-        for(const auto& pair : leaderBoardTimes){
-            cout<<pair.first<<pair.second<<endl;
-        }
-        sort(leaderBoardTimes.begin(), leaderBoardTimes.end(), [](const auto& a, const auto& b){
-            if(a.first<b.first){
-                return true;
-            }
-            return false;
-        });
+        sort(leaderBoardTimes.begin(), leaderBoardTimes.end(), comparePairs);
 
         if(leaderBoardTimes.size() > 5){
             leaderBoardTimes.resize(5);
         }
-        for(const auto& pair : leaderBoardTimes){
-            cout<<pair.first<<pair.second<<endl;
-        }
         rewriteLeaderboardFile();
+        leaderBoardTimes.clear();
         readTopFive("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
+
     }
 
     void rewriteLeaderboardFile(){
