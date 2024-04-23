@@ -86,8 +86,11 @@ public:
         updated = true;
         bool newName = true;
         for(auto& pair : leaderBoardTimes){
-            if(pair.second == " " + name + "*" || pair.second == " " + name){
+            if(pair.second == " " + name + "*"){
                 newName = false;
+                if (pair.second == " " + name + "*") {
+                    pair.second = " " + name;
+                }
                 break;
             }
         }
