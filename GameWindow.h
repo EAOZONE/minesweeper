@@ -109,6 +109,9 @@ public:
             if (sf::Mouse().isButtonPressed(Mouse::Left) && !leftButtonPressed){
                 leftButtonPressed = true;
                 if(faceButton.buttonClicked(sf::Mouse().getPosition(window))){
+                    paused = false;
+                    pausePlayButton.setPause(paused);
+                    pausePlayButton.updateButtonTexture();
                     seconds = 0;
                     minutes = 0;
                     clock.restart();

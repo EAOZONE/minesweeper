@@ -45,4 +45,7 @@ public:
     bool getButtonPressed(){
         return buttonPressed;
     }
+    void setPause(bool pause){
+        this->pause = pause;
+    }
 };
