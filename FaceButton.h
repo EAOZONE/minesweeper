@@ -17,15 +17,15 @@ public:
         return false;
     }
     void gameWon(){
-        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/face_win.png");
+        setTexture("../files/images/face_win.png");
         setSprite();
     }
     void gameLose(){
-        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/face_lose.png");
+        setTexture("../files/images/face_lose.png");
         setSprite();
     }
     void gameActive(){
-        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/face_happy.png");
+        setTexture("../files/images/face_happy.png");
         setSprite();
     }
 };

@@ -16,7 +16,7 @@ public:
         update = update / 10;
         this->digits[0] = update % 10;
         setPosition(33, (numOfCols+.5)*32 + 16);
-        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/digits.png");
+        setTexture("../files/images/digits.png");
         this->sprites[0] = Sprite(texture);
         this->sprites[1] = Sprite(texture);
         this->sprites[2] = Sprite(texture);

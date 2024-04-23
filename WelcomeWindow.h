@@ -24,7 +24,7 @@ public:
         this->x = x;
         this->y = y;
         this->windowName = windowName;
-        font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
+        font.loadFromFile("../files/font.ttf");
     }
     bool events(){
         sf::RenderWindow window(sf::VideoMode(x, y), windowName);

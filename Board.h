@@ -19,7 +19,7 @@ public:
     board.resize(numOfRows, vector<Tile*>(numOfCols, nullptr));
         for(int i = 0; i < numOfRows; i++){
             for(int j = 0; j<numOfCols; j++){
-                board[i][j] = new Tile(i*32, j*32, "../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+                board[i][j] = new Tile(i*32, j*32, "../files/images/tile_hidden.png");
             }
         }
         allOpen = false;
@@ -155,22 +155,22 @@ void calculateNearbyBombs(){
     }
     void setDebug(int i, int j){
         if(board[i][j]->getState() == hidden) {
-            board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+            board[i][j]->setTexture("../files/images/tile_revealed.png");
             board[i][j]->setSprite();
             board[i][j]->setState(revealed);
         }
         else if(board[i][j]->getState() == flag){
-            board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+            board[i][j]->setTexture("../files/images/tile_revealed.png");
             board[i][j]->setSprite();
             board[i][j]->setState(flagBomb);
         }
         else if(board[i][j]->getState() ==flagBomb){
-            board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            board[i][j]->setTexture("../files/images/tile_hidden.png");
             board[i][j]->setSprite();
             board[i][j]->setState(flag);
         }
         else if(board[i][j]->getState() == revealed){
-            board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            board[i][j]->setTexture("../files/images/tile_hidden.png");
             board[i][j]->setSprite();
             board[i][j]->setState(hidden);
         }
@@ -188,7 +188,7 @@ void calculateNearbyBombs(){
         counter->reset();
         for(int i = 0; i < numOfRows; i++){
             for(int j = 0; j < numOfCols; j++){
-                board[i][j] = new Tile(i*32, j*32, "../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+                board[i][j] = new Tile(i*32, j*32, "../files/images/tile_hidden.png");
             }
         }
     }
@@ -197,12 +197,12 @@ void calculateNearbyBombs(){
             for(int j = 0; j < numOfCols; j++){
                 if(board[i][j]->getIsMine()){
                     if(board[i][j]->getState() == hidden) {
-                        board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+                        board[i][j]->setTexture("../files/images/tile_revealed.png");
                         board[i][j]->setSprite();
                         board[i][j]->setState(revealed);
                     }
                     if(board[i][j]->getState() == flag){
-                        board[i][j]->setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+                        board[i][j]->setTexture("../files/images/tile_revealed.png");
                         board[i][j]->setSprite();
                     }
                 }

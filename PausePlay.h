@@ -31,9 +31,9 @@ public:
     void updateButtonTexture() {
         // Update the button texture based on the current pause state
         if (pause) {
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/play.png");
+            setTexture("../files/images/play.png");
         } else {
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/pause.png");
+            setTexture("../files/images/pause.png");
         }
 
         // Update the sprite to reflect the new texture

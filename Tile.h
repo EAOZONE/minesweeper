@@ -18,7 +18,7 @@ public:
         isMine = false;
         state = hidden;
         flagSprite.setNewPosition(0, 0);
-        numberSprite.setNewPosition(0, 0, "../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+        numberSprite.setNewPosition(0, 0, "../files/images/tile_revealed.png");
         mineSprite.setNewPosition(0, 0);
     }
     Tile(float x, float y, string texture){
@@ -28,7 +28,7 @@ public:
         isMine = false;
         state = hidden;
         flagSprite.setNewPosition(x, y);
-        numberSprite.setNewPosition(x, y, "../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+        numberSprite.setNewPosition(x, y, "../files/images/tile_revealed.png");
         mineSprite.setNewPosition(x, y);
     }
 
@@ -47,7 +47,7 @@ public:
 
     bool removeFlag(Vector2i mousePosition){
         if(sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))){
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            setTexture("../files/images/tile_hidden.png");
             setSprite();
             state = hidden;
             return true;
@@ -57,13 +57,13 @@ public:
     void openBox(Vector2i mousePosition) {
         if (sprite.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosition))) {
             if(bombCount == 0 || isMine){
-                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+                setTexture("../files/images/tile_revealed.png");
                 setSprite();
             }
             else{
-                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+                setTexture("../files/images/tile_revealed.png");
                 setSprite();
-                numberSprite.setNewTexture("../Project 3 - Minesweeper Spring 2024/files/images/number_"+ to_string(bombCount)+".png");
+                numberSprite.setNewTexture("../files/images/number_"+ to_string(bombCount)+".png");
 
             }
             state = revealed;
@@ -71,13 +71,13 @@ public:
     }
     void openBox(){
         if(bombCount == 0){
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+            setTexture("../files/images/tile_revealed.png");
             setSprite();
         }
         else{
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+            setTexture("../files/images/tile_revealed.png");
             setSprite();
-            numberSprite.setNewTexture("../Project 3 - Minesweeper Spring 2024/files/images/number_"+ to_string(bombCount)+".png");
+            numberSprite.setNewTexture("../files/images/number_"+ to_string(bombCount)+".png");
         }
         state = revealed;
     }
@@ -103,28 +103,28 @@ public:
         return sprite;
     }
     void setOpen(){
-        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+        setTexture("../files/images/tile_revealed.png");
         setSprite();
     }
 
     void backToNormal(){
         if(state == flag){
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            setTexture("../files/images/tile_hidden.png");
             setSprite();
         }
         else if(state != hidden) {
             if (bombCount == 0) {
-                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+                setTexture("../files/images/tile_revealed.png");
                 setSprite();
             } else {
-                setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_revealed.png");
+                setTexture("../files/images/tile_revealed.png");
                 setSprite();
-                numberSprite.setNewTexture("../Project 3 - Minesweeper Spring 2024/files/images/number_"+ to_string(bombCount)+".png");
+                numberSprite.setNewTexture("../files/images/number_"+ to_string(bombCount)+".png");
             }
             state = revealed;
         }
         else{
-            setTexture("../Project 3 - Minesweeper Spring 2024/files/images/tile_hidden.png");
+            setTexture("../files/images/tile_hidden.png");
             setSprite();
         }
     }

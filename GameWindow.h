@@ -26,7 +26,7 @@ private:
     sf::Time totalElapsedTime;
 public:
     GameWindow(int rows, int cols, int bombs, string name): numOfCols(rows), numOfRows(cols), numOfBombs(bombs), PlayerName(name){
-        font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
+        font.loadFromFile("../files/font.ttf");
     }
     void pauseClock(){
         totalElapsedTime += clock.getElapsedTime();
@@ -40,11 +40,11 @@ public:
         board.setBombs();
         board.calculateNearbyBombs();
         timer = new Timer((numOfCols*32)-97, 32*(numOfRows+0.5)+16, numOfCols, numOfRows);
-        DebugButton debugButton = DebugButton((numOfCols * 32) - 304, 32 * (numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/debug.png");
-        PausePlay pausePlayButton = PausePlay((numOfCols * 32) - 240, 32 * (numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/pause.png");
-        LeaderBoard leaderBoard = LeaderBoard( (numOfCols * 32) - 176, 32*(numOfRows + 0.5), "../Project 3 - Minesweeper Spring 2024/files/images/leaderboard.png");
-        leaderBoard.readTopFive("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
-        FaceButton faceButton = FaceButton((numOfCols*16)-32, 32*(numOfRows+0.5), "../Project 3 - Minesweeper Spring 2024/files/images/face_happy.png");
+        DebugButton debugButton = DebugButton((numOfCols * 32) - 304, 32 * (numOfRows + 0.5), "../files/images/debug.png");
+        PausePlay pausePlayButton = PausePlay((numOfCols * 32) - 240, 32 * (numOfRows + 0.5), "../files/images/pause.png");
+        LeaderBoard leaderBoard = LeaderBoard( (numOfCols * 32) - 176, 32*(numOfRows + 0.5), "../files/images/leaderboard.png");
+        leaderBoard.readTopFive("../files/leaderboard.txt");
+        FaceButton faceButton = FaceButton((numOfCols*16)-32, 32*(numOfRows+0.5), "../files/images/face_happy.png");
         while (window.isOpen()) {
             sf::Event event{};
             while (window.pollEvent(event)) {

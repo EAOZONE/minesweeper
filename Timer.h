@@ -13,7 +13,7 @@ public:
         this->secondsInt[0] = 0;
         this->secondsInt[1] = 0;
         setPosition(x, y);
-        setTexture("../Project 3 - Minesweeper Spring 2024/files/images/digits.png");
+        setTexture("../files/images/digits.png");
         this->minutes[0] = Sprite(texture);
         this->minutes[1] = Sprite(texture);
         this->seconds[0] = Sprite(texture);

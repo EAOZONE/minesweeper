@@ -20,7 +20,7 @@ public:
         setPosition(x, y);
         setTexture(texture);
         setSprite();
-        font.loadFromFile("../Project 3 - Minesweeper Spring 2024/files/font.ttf");
+        font.loadFromFile("../files/font.ttf");
     }
 
     void readTopFive(string file) {
@@ -101,12 +101,12 @@ public:
         }
         rewriteLeaderboardFile();
         leaderBoardTimes.clear();
-        readTopFive("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
+        readTopFive("../files/leaderboard.txt");
 
     }
 
     void rewriteLeaderboardFile(){
-        ofstream output_file("../Project 3 - Minesweeper Spring 2024/files/leaderboard.txt");
+        ofstream output_file("../files/leaderboard.txt");
         for(const auto& pair : leaderBoardTimes){
             output_file<<setw(2)<<setfill('0')<<pair.first/100 <<":"<<setw(2)<<setfill('0')<<pair.first%100<<","<<pair.second<<endl;
         }
