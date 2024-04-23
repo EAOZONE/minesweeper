@@ -82,14 +82,14 @@ public:
                 for(int j = 0; j < numOfRows; j++) {
 
                     window.draw(board.getBoard()[i][j]->sprite);
-                    if(board.getBoard()[i][j]->getState() == revealed && board.getBoard()[i][j]->getBombCount() > 0 && !board.getBoard()[i][j]->getIsMine()){
+                    if(!paused && board.getBoard()[i][j]->getState() == revealed && board.getBoard()[i][j]->getBombCount() > 0 && !board.getBoard()[i][j]->getIsMine()){
                         window.draw(board.getBoard()[i][j]->numberSprite.sprite);
                     }
                     if(board.getBoard()[i][j]->getState() == flag && !paused)
                         window.draw(board.getFlag(i, j));
-                    if((!gameActive || debugButton.getDebugActive()) && board.getBoard()[i][j]->getIsMine())
+                    if((!paused && !gameActive || debugButton.getDebugActive()) && board.getBoard()[i][j]->getIsMine())
                         window.draw(board.getBoard()[i][j]->mineSprite.sprite);
-                    if(board.getBoard()[i][j]->getState() == revealed && board.getBoard()[i][j]->getIsMine())
+                    if(!paused && board.getBoard()[i][j]->getState() == revealed && board.getBoard()[i][j]->getIsMine())
                         window.draw(board.getBoard()[i][j]->mineSprite.sprite);
                 }
             }
@@ -133,9 +133,11 @@ public:
                     }
                     window.display();
                     leaderBoard.drawWindow(numOfCols, numOfRows);
-                    for(int i = 0; i < numOfCols; i++) {
-                        for (int j = 0; j < numOfRows; j++) {
-                            board.openTile(sf::Mouse().getPosition(window), i, j);
+                    if(!paused) {
+                        for (int i = 0; i < numOfCols; i++) {
+                            for (int j = 0; j < numOfRows; j++) {
+                                board.openTile(sf::Mouse().getPosition(window), i, j);
+                            }
                         }
                     }
                 }
