@@ -59,12 +59,11 @@ public:
                     }
                 }
             }
-            sf::Text text = drawWord(name + "|", x / 2, y / 2 - 45, 18);
-            sf::Text instructions = drawWord("WELCOME TO MINESWEEPER!", x / 2, (y / 2) - 150, 24);
-            sf::Text instructions_1 = drawWord("Enter your name:", x / 2, (y / 2) - 75, 20);
-            instructions.setStyle(sf::Text::Underlined);
+            sf::Text text = drawWord(name + "|", x / 2, y / 2 - 45, 18, sf::Color::Yellow);
+            sf::Text instructions = drawWord("WELCOME TO MINESWEEPER!", x / 2, (y / 2) - 150, 24, sf::Color::White);
+            sf::Text instructions_1 = drawWord("Enter your name:", x / 2, (y / 2) - 75, 20, sf::Color::White);
             text.setStyle(sf::Text::Bold);
-            instructions.setStyle(sf::Text::Bold);
+            instructions.setStyle(sf::Text::Bold | sf::Text::Underlined);
             instructions_1.setStyle(sf::Text::Bold);
             window.clear(sf::Color::Blue);
             window.draw(instructions);
@@ -73,10 +72,10 @@ public:
             window.display();
         }
     }
-    sf::Text drawWord(const string& word, float pos_x, float pos_y, int size){
+    sf::Text drawWord(const string& word, float pos_x, float pos_y, int size, sf::Color color){
         sf::Text text(word, font);
         text.setCharacterSize(size);
-        text.setFillColor(sf::Color::White);
+        text.setFillColor(color);
         setText(text, pos_x, pos_y);
         return text;
     }
